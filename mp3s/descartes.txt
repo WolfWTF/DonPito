@@ -1,0 +1,49 @@
+'''
+@Bot.command()
+async def g88f(ctx):
+  A110 = 110.0
+  afinacion = []
+  for x in range(3,52):
+    freq=A110*(2**(x/12))
+    afinacion.append(freq)
+  afinacion.sort()
+  print(afinacion)
+  nota = 1
+  for freq in afinacion:
+    audio =[]
+    audio = wg.append_sinewave(freq,audio=audio)
+    
+    nombre = "notas/"+ str(nota) +".p"
+    print(nombre)
+    file = open(nombre, 'wb')
+    pickle.dump(audio, file)
+    file.close()
+
+    nota += 1
+    
+  #DESDE EL DO2 HASTA EL DO6
+  '''
+'''
+@Bot.command()
+async def wavs(ctx):
+  for i in range(1,50):
+    nombre = "notas/" + str(i) + ".p"
+    fnota = open(nombre, 'rb')
+    nota = pickle.load(fnota)
+    nombre_wav = "wavs/" + str(i) + ".wav"
+    wg.save_wav(nombre_wav,nota)
+
+@Bot.command()
+async def mp3s(ctx):
+  for i in range(1,50):
+    nombre = "wavs/" + str(i) + ".wav"
+    nota = pydub.AudioSegment.from_file(nombre)
+    nombre_mp3 = "mp3s/" + str(i) +".mp3"
+    nota.export(nombre_mp3, format="mp3")
+'''
+'''
+@Bot.check_once
+def whitelist(ctx):
+    return ctx.message.channel.id in channel_whitelist
+
+'''
