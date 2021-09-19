@@ -314,6 +314,7 @@ async def entrenar(ctx,modo = 'ascendente'):
       semitones = random.randint(0,12)
       get_audio(modo,semitones)
       #### SE ENVIA EL AUDIO
+      print("aqui estoy")
       audio = await ctx.send(file=discord.File(r'test.mp3'))
 
     #NI BIEN SE ENVIA, SE BORRA
