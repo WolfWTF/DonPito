@@ -224,11 +224,11 @@ def get_audio(modo,semitones):
       if piano:
         info = aj.abrir_json("DonPito/piano/info.json")
         notas = info['keys']
-        nota1_nombre = "piano/" + notas[n1] +".mp3"
-        nota2_nombre = "piano/" + notas[n2] +".mp3"
+        nota1_nombre = "DonPito/piano/" + notas[n1] +".mp3"
+        nota2_nombre = "DonPito/piano/" + notas[n2] +".mp3"
       else:
-        nota1_nombre = "mp3s/" +str(n1) +".mp3"
-        nota2_nombre = "mp3s/" +str(n2) +".mp3"
+        nota1_nombre = "DonPito/mp3s/" +str(n1) +".mp3"
+        nota2_nombre = "DonPito/mp3s/" +str(n2) +".mp3"
 
       fnota1 = open(nota1_nombre,'rb')
       nota1 = pydub.AudioSegment.from_file(nota1_nombre)
