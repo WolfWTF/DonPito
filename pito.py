@@ -50,7 +50,7 @@ def quehoraes():
   return hora
 
 def get_comandos():
-    comandos = aj.abrir_json('comandos.json')
+    comandos = aj.abrir_json('DonPito/comandos.json')
 
     str_entrenamiento = comandos["entrenamiento"]
     str_entrenamiento = str_entrenamiento.replace(",","`\n`!")
@@ -222,7 +222,7 @@ def get_audio(modo,semitones):
 
       #if(modo == 'ascendente' or modo == 'descendente'):
       if piano:
-        info = aj.abrir_json("piano/info.json")
+        info = aj.abrir_json("DonPito/piano/info.json")
         notas = info['keys']
         nota1_nombre = "piano/" + notas[n1] +".mp3"
         nota2_nombre = "piano/" + notas[n2] +".mp3"
@@ -355,5 +355,5 @@ async def comandos(ctx):
   comandos = get_comandos()
   respuesta.add_field(name="Entrenamiento:", value = comandos)
   await ctx.reply(embed=respuesta)
-token = aj.abrir_json('token_pito.json')["token"]
+token = aj.abrir_json('DonPito/token_pito.json')["token"]
 Bot.run(token) #token
