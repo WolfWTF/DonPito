@@ -355,5 +355,5 @@ async def comandos(ctx):
   comandos = get_comandos()
   respuesta.add_field(name="Entrenamiento:", value = comandos)
   await ctx.reply(embed=respuesta)
-token = actjson.abrir_json('token_pito.json')['token']
+token = aj.abrir_json('token_pito.json')['token']
 Bot.run(token) #token
