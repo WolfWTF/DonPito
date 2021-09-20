@@ -315,7 +315,7 @@ async def entrenar(ctx,modo = 'ascendente'):
       get_audio(modo,semitones)
       #### SE ENVIA EL AUDIO
       print("aqui estoy")
-      audio = await ctx.send(file=discord.File(r'test.mp3'))
+      audio = await ctx.send(file=discord.File(r'DonPito/test.mp3'))
 
     #NI BIEN SE ENVIA, SE BORRA
     os.remove("test.mp3")
