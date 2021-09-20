@@ -318,7 +318,7 @@ async def entrenar(ctx,modo = 'ascendente'):
       audio = await ctx.send(file=discord.File(r'DonPito/test.mp3'))
 
     #NI BIEN SE ENVIA, SE BORRA
-    os.remove("test.mp3")
+    os.remove("DonPito/test.mp3")
     global intervalos
     respuesta_correcta = intervalos[semitones]
 
