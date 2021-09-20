@@ -244,7 +244,7 @@ def get_audio(modo,semitones):
       else:
         juntas = nota1.append(nota2, crossfade = 25)
 
-      juntas.export("test.mp3", format="mp3")
+      juntas.export("DonPito/test.mp3", format="mp3")
       
 media = 0
 n = 0
