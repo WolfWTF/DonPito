@@ -62,39 +62,6 @@ async def uptime(ctx):
     respuesta += str(round(seg)) + " segundos."
   await ctx.reply(respuesta)
   
-'''
-@Bot.command()
-async def r(ctx):
-  info = aj.abrir_json("piano/info.json")
-  keys = info['keys']
-  print(len(keys))
-  for s in keys:
-    f_name = "piano/" + s + ".mp3"
-    sound = pydub.AudioSegment.from_mp3(f_name)
-    faded = sound.fade_out(25)
-    f_name2 = "piano2/" + s + ".mp3"
-    faded.export(f_name2, format="mp3")
-''' 
-'''@Bot.command()
-async def id_canal(ctx):
-  respuesta = ctx.channel.id
-  await ctx.reply(respuesta)'''
-'''async def hora():
-  canal = Bot.get_channel(840366998315991061)
-  while True:
-      quehora = quehoraes()
-      global hora_antigua
-      han_pasado = quehora - hora_antigua
-      tiempo = tdf(han_pasado)
-      hora_antigua = quehora
-      respuesta = str(round(tiempo[2])) + " minutos"
-      await canal.send(respuesta)
-      await asyncio.sleep(180)
-      await hora()
-
-def quehoraes():
-  hora = datetime.now()
-  return hora'''
 
 intervalos = [
               "Unísono",
@@ -148,7 +115,7 @@ def corregir(ctx,selec_usuario,respuesta_correcta,elapsed):
   else:
     respuesta =":x:  **" + selec_usuario +"**  :x:  Respuesta correcta: **" + respuesta_correcta +"**."
   return respuesta, correcto
-niveles = {}
+
 piano = True
 
 def esunnumero(mensaje):
@@ -158,6 +125,19 @@ def esunnumero(mensaje):
       loes = False
   return loes
 
+
+@Bot.command()
+async def niveles(ctx):
+  niveles = aj.abrir_json("DonPito/niveles.json")
+  i=1
+  respuesta = "***Niveles:*** \n"
+  for nivel in niveles:
+    nivel_string = str(i) + ". " + nivel["nombre"]
+    respuesta += nivel_string
+    i+=1
+  await ctx.reply(respuesta)
+
+  
 @Bot.command()
 async def aventura(ctx):
   usr_id = ctx.author.id
