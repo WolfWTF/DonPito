@@ -51,5 +51,41 @@
 		"nombre": "Cuartas, tritonos y quintas armónicas.",
 		"intervalos": [5,6,7],
 		"modo": "simultaneo"
+	},
+
+	"10" : {
+		"nombre": "Sextas y séptimas ascendentes.",
+		"intervalos": [8,9,10,11],
+		"modo": "ascendente"
+	},
+
+	"11" : {
+		"nombre": "Sextas y séptimas descendentes.",
+		"intervalos": [8,9,10,11],
+		"modo": "descendente"
+	},
+
+	"12" : {
+		"nombre": "Sextas y séptimas armónicas.",
+		"intervalos": [8,9,10,11],
+		"modo": "simultaneo"
+	},
+
+	"13" : {
+		"nombre": "Séptimas, octavas y novenas ascendentes.",
+		"intervalos": [10,11,12,13,14],
+		"modo": "ascendente"
+	},
+
+	"14" : {
+		"nombre": "Séptimas, octavas y novenas descendentes.",
+		"intervalos": [10,11,12,13,14],
+		"modo": "descendente"
+	},
+
+	"15" : {
+		"nombre": "Séptimas, octavas y novenas armónicas.",
+		"intervalos": [10,11,12,13,14],
+		"modo": "simultaneo"
 	}
 }
