@@ -1,1 +1,55 @@
-{}
+{
+	"1" : {
+		"nombre": "Unísonos y segundas ascendentes.",
+		"intervalos": [0,1,2],
+		"modo": "ascendente"
+	}
+
+	"2" : {
+		"nombre": "Unísonos y segundas descendentes.",
+		"intervalos": [0,1,2],
+		"modo": "descendentes"
+	}
+
+	"3" : {
+		"nombre": "Unísonos y segundas armónicas",
+		"intervalos": [0,1,2],
+		"modo": "simultaneo"
+	}
+
+	"4" : {
+		"nombre": "Segundas y terceras ascendentes.",
+		"intervalos": [1,2,3,4],
+		"modo": "ascendente"
+	}
+
+	"5" : {
+		"nombre": "Segundas y terceras descendentes.",
+		"intervalos": [1,2,3,4],
+		"modo": "descendente"
+	}
+
+	"6" : {
+		"nombre": "Segundas y terceras armónicas.",
+		"intervalos": [1,2,3,4],
+		"modo": "simultaneo"
+	}
+
+	"7" : {
+		"nombre": "Cuartas, tritonos y quintas ascendentes.",
+		"intervalos": [5,6,7],
+		"modo": "ascendente"
+	}
+
+	"8" : {
+		"nombre": "Cuartas, tritonos y quintas descendentes.",
+		"intervalos": [5,6,7],
+		"modo": "descendente"
+	}
+
+	"9" : {
+		"nombre": "Cuartas, tritonos y quintas armónicas.",
+		"intervalos": [5,6,7],
+		"modo": "simultaneo"
+	}
+}
