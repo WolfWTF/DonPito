@@ -29,25 +29,10 @@ async def on_ready():
   print('Sesión iniciada como {0.user}'.format(Bot))
   channel = Bot.get_channel(840366998315991061) #Parche
   await channel.send("¡Don Pito reconectado!")
-  Bot.loop.create_task(hora())
+  #Bot.loop.create_task(hora())
 
 
-async def hora():
-  canal = Bot.get_channel(840366998315991061)
-  while True:
-      quehora = quehoraes()
-      global hora_antigua
-      han_pasado = quehora - hora_antigua
-      tiempo = tdf(han_pasado)
-      hora_antigua = quehora
-      respuesta = str(round(tiempo[2])) + " minutos"
-      await canal.send(respuesta)
-      await asyncio.sleep(180)
-      await hora()
 
-def quehoraes():
-  hora = datetime.now()
-  return hora
 
 def get_comandos():
     comandos = aj.abrir_json('DonPito/comandos.json')
@@ -55,23 +40,10 @@ def get_comandos():
     str_entrenamiento = comandos["entrenamiento"]
     str_entrenamiento = str_entrenamiento.replace(",","`\n`!")
     str_entrenamiento = "`!" + str_entrenamiento + "`"
-
     string_completa = str_entrenamiento
 
     return string_completa
-'''
-@Bot.command()
-async def r(ctx):
-  info = aj.abrir_json("piano/info.json")
-  keys = info['keys']
-  print(len(keys))
-  for s in keys:
-    f_name = "piano/" + s + ".mp3"
-    sound = pydub.AudioSegment.from_mp3(f_name)
-    faded = sound.fade_out(25)
-    f_name2 = "piano2/" + s + ".mp3"
-    faded.export(f_name2, format="mp3")
-'''
+
 @Bot.command()
 async def uptime(ctx):
   global start
@@ -90,11 +62,39 @@ async def uptime(ctx):
     respuesta += str(round(seg)) + " segundos."
   await ctx.reply(respuesta)
   
-  
+'''
 @Bot.command()
+async def r(ctx):
+  info = aj.abrir_json("piano/info.json")
+  keys = info['keys']
+  print(len(keys))
+  for s in keys:
+    f_name = "piano/" + s + ".mp3"
+    sound = pydub.AudioSegment.from_mp3(f_name)
+    faded = sound.fade_out(25)
+    f_name2 = "piano2/" + s + ".mp3"
+    faded.export(f_name2, format="mp3")
+''' 
+'''@Bot.command()
 async def id_canal(ctx):
   respuesta = ctx.channel.id
-  await ctx.reply(respuesta)
+  await ctx.reply(respuesta)'''
+'''async def hora():
+  canal = Bot.get_channel(840366998315991061)
+  while True:
+      quehora = quehoraes()
+      global hora_antigua
+      han_pasado = quehora - hora_antigua
+      tiempo = tdf(han_pasado)
+      hora_antigua = quehora
+      respuesta = str(round(tiempo[2])) + " minutos"
+      await canal.send(respuesta)
+      await asyncio.sleep(180)
+      await hora()
+
+def quehoraes():
+  hora = datetime.now()
+  return hora'''
 
 intervalos = [
               "Unísono",
@@ -128,21 +128,28 @@ ActionRow1 = Botones_Intervalos[0:4]
 ActionRow2 = Botones_Intervalos[4:9]
 ActionRow3 = Botones_Intervalos[9:]
 
-
+def inscribir(ctx):
+  padawans = aj.abrir_json("DonPito/padawans.json")
+  usr_id = str(ctx.author.id)
+  usr_name = ctx.author.name
+  padawans[usr_id] = {"name": usr_name, "exp": 0, "nivel_intervalos": 0}
+  aj.actualizar_padawans(padawans)
+  return padawans
 
 def corregir(ctx,selec_usuario,respuesta_correcta,elapsed):
   correcto = selec_usuario == respuesta_correcta
-  usuario = ctx.author.name
+  usuario = ctx.author
   tiempo = tdf(elapsed)
   segundos_totales = round(tiempo[0]*3600*24 + tiempo[1]*3600 + tiempo[2]*60 + tiempo[3], 2)
 
   if correcto:
-    respuesta = ":white_check_mark:  **" + selec_usuario + "**  :white_check_mark:  ¡Muy bien, " + usuario +"!" + " Tiempo: " + str(segundos_totales) + " s."
+    respuesta = ":white_check_mark:  **" + selec_usuario + "**  :white_check_mark:  ¡Muy bien, " + usuario.name +"!" + " Tiempo: " + str(segundos_totales) + " s.\n +1 punto de experiencia."
+    dar_exp(ctx,1)
   else:
     respuesta =":x:  **" + selec_usuario +"**  :x:  Respuesta correcta: **" + respuesta_correcta +"**."
   return respuesta, correcto
-
-piano = False
+niveles = {}
+piano = True
 
 def esunnumero(mensaje):
   loes=True
@@ -150,6 +157,13 @@ def esunnumero(mensaje):
     if not caracter.isdigit():
       loes = False
   return loes
+
+@Bot.command()
+async def aventura(ctx):
+  usr_id = ctx.author.id
+  padawans = aj.abrir_json("DonPito/padawans.json")
+  nivel = padawans[usr_id]['nivel_intervalos']
+
 
 @Bot.command()
 async def pito(ctx):
@@ -170,12 +184,8 @@ async def pito(ctx):
   end=datetime.now()
   elapsed = end-start
   frecuencia = int(frecuencia_msg.content)
-  if frecuencia <= tolerancia[0] or frecuencia >= tolerancia[1]: 
-    respuesta1 = ":x: *No pasas la prueba. Tu respuesta: " + str(frecuencia) + " Hz.*" 
-    color = 0xff0000
-  else:
-    respuesta1 = ":white_check_mark: *¡Prueba superada! Tu respuesta: " + str(frecuencia) + " Hz.*" 
-    color = 0x00c907
+
+  #AQUI PREMIAR O CASTIGAR
   tiempo = tdf(elapsed)
   segundos_totales = round(tiempo[0]*3600*24 + tiempo[1]*3600 + tiempo[2]*60 + tiempo[3], 2)
   contenido = ":thought_balloon: Respuesta de "+ ctx.author.name + ": "
@@ -183,7 +193,16 @@ async def pito(ctx):
   contenido += ":straight_ruler: Intervalo tolerancia: " + str(tolerancia) + " Hz.\n"
   contenido += ":bar_chart: Te has equivocado en " + str(abs(frecuencia - f)) +" Hz."
   footer = "Tiempo empleado por "+ ctx.author.name+ ": " + str(segundos_totales) +  " s."
-    
+  if frecuencia <= tolerancia[0] or frecuencia >= tolerancia[1]: 
+    respuesta1 = ":x: *No pasas la prueba. Tu respuesta: " + str(frecuencia) + " Hz.*" 
+    color = 0xff0000
+  else:
+    respuesta1 = ":white_check_mark: *¡Prueba superada! Tu respuesta: " + str(frecuencia) + " Hz.*" 
+    color = 0x00c907
+    contenido +=  "+1 punto de experiencia. :chart_with_upwards_trend:"
+    dar_exp(ctx,1)
+
+  
   os.remove('tono_puro.wav')
   mensaje = discord.Embed(title = respuesta1, description = contenido, colour = color)
   mensaje.set_footer(text = footer,icon_url = "https://images.emojiterra.com/google/android-pie/512px/23f1.png")
@@ -199,6 +218,30 @@ async def tono(ctx):
   global piano
   piano = False
   await ctx.send("Sonido: Tonos puros.")
+
+@Bot.command()
+async def exp(ctx):
+  usr_id = str(ctx.author.id)
+  usr_name = ctx.author.name
+  padawans = aj.abrir_json("DonPito/padawans.json")
+  if usr_id in padawans:
+    exp= padawans[usr_id]['exp']
+  else:
+    padawans = inscribir(ctx)
+    exp = padawans[usr_id]['exp']
+  respuesta = "El padawan **" + usr_name + "** tiene **" + str(exp) + "** puntos de experiencia :chart_with_upwards_trend:."
+  await ctx.reply(respuesta)
+
+def dar_exp(ctx,puntos):
+  padawans = aj.abrir_json("DonPito/padawans.json")
+  usr_id = str(ctx.author.id)
+  exp = padawans[usr_id]['exp']
+  exp += puntos
+  padawans[usr_id]['exp'] = exp
+  aj.actualizar_padawans(padawans)
+
+
+
 
 
 entrenador_ocupado = False
@@ -277,7 +320,6 @@ async def continuo(ctx,modo = 'aleatorio'):
   else:
     media = (media*(n-1) + elapsed)/n
 
-
   if continuar:
     if correcto:
       aciertos += 1
@@ -338,6 +380,7 @@ async def entrenar(ctx,modo = 'ascendente'):
     if selec_usuario != "Stop":
       respuesta, correcto = corregir(ctx,selec_usuario, respuesta_correcta,elapsed)
       await ctx.send(respuesta, reference = audio)
+      ### aqui habría que premiar o castigar en funcion del boolean "correcto". aqui o en corregir?
       entrenador_ocupado = False
       return True, elapsed, correcto
     else:
