@@ -8,7 +8,7 @@
 	"2" : {
 		"nombre": "Unísonos y segundas descendentes.",
 		"intervalos": [0,1,2],
-		"modo": "descendentes"
+		"modo": "descendente"
 	},
 
 	"3" : {
