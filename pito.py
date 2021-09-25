@@ -39,19 +39,6 @@ intervalos = ["Unísono", "2ª menor", "2ª Mayor","3ª menor", "3ª Mayor",
               "4ª", "Tritono", "5ª", "6ª menor", "6ª mayor","7ª menor",
               "7ª Mayor", "Octava", "9ª menor", "9ª Mayor"]
 Botones_Intervalos = []
-'''              Button(label = intervalos[0],style = 1),
-              Button(label = intervalos[1],style = 1),
-              Button(label = intervalos[2],style = 1),
-              Button(label = intervalos[3],style = 1),
-              Button(label = intervalos[4],style = 1),
-              Button(label = intervalos[5],style = 1),
-              Button(label = intervalos[6],style = 1),
-              Button(label = intervalos[7],style = 1),
-              Button(label = intervalos[8],style = 1),
-              Button(label = intervalos[9],style = 1),
-              Button(label = intervalos[10],style = 1),
-              Button(label = intervalos[11],style = 1),
-              Button(label = intervalos[12],style = 1)]''' #SI NO HA DADO ERROR, QUITAR ESTO
 
 for inter in intervalos:
   new_boton = Button(label = inter,style = 1)
@@ -250,7 +237,7 @@ async def aventura(ctx):
     else:
       resultados += ":x: No has superado la prueba. Inténtalo de nuevo."
     respuesta = discord.Embed(title = "Resultados:", description = resultados)
-    await ctx.send(respuesta)
+    await ctx.send(embed=respuesta)
 
 ####################### PITO ##########################################################################
 
@@ -344,9 +331,9 @@ async def continuo(ctx,modo = 'aleatorio'):
   continuar=True
   stop_button = Button(label="Stop",style=4)
   global ActionRow3
-  ActionRow3.append(stop_button)
+  ActionRow3.append(stop_button) #ESTO ME LO HE CARGAO EN LA FUNCION ENTRENAR
   continuar, elapsed, correcto = await entrenar(ctx,modo_elegido)
-  ActionRow3 = Botones_Intervalos[9:]
+  ActionRow3 = Botones_Intervalos[9:13]
 
   global media
   global n
@@ -406,7 +393,39 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
 
     #MANDAMOS LOS BOTONES Y ESPERAMOS A QUE SE PULSEN
     start=datetime.now()
-    Botones = await ctx.send("Opciones:", components = [ActionRow1,ActionRow2,ActionRow3])
+
+    
+    if len(inter) =< 5:
+      compontentes = []
+      for i in inter:
+        componentes.append(Botones_Intervalos[i])
+    elif len(inter) =< 10:
+      a=1
+      ar1 = []
+      ar2 = []
+      for i in inter():
+        if a =< 5:
+          ar1.append(Botones_Intervalos[i])
+        else:
+          ar2.append(Botones_Intervalos[i])
+      componentes = [ar1,ar2]
+    else:
+      a=1
+      ar1 = []
+      ar2 = []
+      ar3 = []
+      for i in inter():
+        if a =< 5:
+          ar1.append(Botones_Intervalos[i])
+        elif a <= 10:
+          ar2.append(Botones_Intervalos[i])
+        else:
+          ar3.append(Botones_Intervalos[i])
+
+      stop_button = Button(label="Stop",style=4)
+      componentes = [ar1,ar2,ar3,[stop_button]]  
+
+    Botones = await ctx.send("Opciones:", components = componentes)
 
     def check(interaction):
       return interaction.author == ctx.author
