@@ -199,7 +199,7 @@ async def niveles(ctx):
   i=1
   respuesta = u"**NIVELES:** \n"
   for nivel in niveles:
-    nivel_string = u"{}. {}\n".format(i,niveles[nivel]["nombre"]).encode("latin-1").decode("es_ES.utf-8")
+    nivel_string = u"{}. {}\n".format(i,niveles[nivel]["nombre"])#.encode("latin-1").decode("es_ES.utf-8")
     respuesta += nivel_string
     i+=1
 
