@@ -59,7 +59,7 @@ for inter in intervalos:
 
 ActionRow1 = Botones_Intervalos[0:4]
 ActionRow2 = Botones_Intervalos[4:9]
-ActionRow3 = Botones_Intervalos[9:]
+ActionRow3 = Botones_Intervalos[9:12]
 
 ####################################################################################################
 ################# FUNCIONES AUXILIARES QUE EN EL FUTURO METERÉ EN UN ARCHIVO APARTE ################
