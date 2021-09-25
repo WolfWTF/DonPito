@@ -214,8 +214,7 @@ async def aventura(ctx):
   except:
     padawans[usr_id]['nivel_intervalos'] = 0
     aj.actualizar_padawans(padawans)
-
-  nivel = padawans[usr_id]['nivel_intervalos']
+    nivel = padawans[usr_id]['nivel_intervalos']
   ActionRowSiNo = [Button(label = "Sí",style = 3), Button(label = "No" ,style = 4)]
   mensaje = "¿Quieres continuar la avenutra?"
   Botones = await ctx.send(mensaje, components = [ActionRowSiNo])
@@ -225,7 +224,14 @@ async def aventura(ctx):
 
   interaction = await Bot.wait_for("button_click",check=check)
   await Botones.delete()
-  await ctx.reply(respuesta)
+
+  selec_usuario = interaction.component.label
+  if selec_usuario == "No":
+    await ctx.reply("Saliendo...", delete_after = 5)
+  elif == "Sí":
+    await ctx.reply("Comenzando aventura. Nivel: {}".format(nivel)
+
+
 
 ####################### PITO ##########################################################################
 
