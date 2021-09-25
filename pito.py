@@ -199,10 +199,10 @@ async def niveles(ctx):
   i=1
   respuesta = u"**NIVELES:** \n"
   for nivel in niveles:
-    nivel_string = u"{}. {}\n".format(i,niveles[nivel]["nombre"])#.encode("latin-1").decode("es_ES.utf-8")
+    nivel_string = u"{}. {}\n".format(i,niveles[nivel]["nombre"]).encode("latin-1").decode("es_ES.utf-8")
     respuesta += nivel_string
     i+=1
-
+  await ctx.reply(respuesta)
 ###################### AVENTURA #######################################################################
 
 @Bot.command()
@@ -228,7 +228,7 @@ async def aventura(ctx):
     await ctx.reply("Saliendo...", delete_after = 5)
   elif selec_usuario == "Sí":
     niveles = aj.abrir_json("DonPito/niveles.json")
-    await ctx.reply("Comenzando aventura.\nNivel {}: {}".format(nivel,niveles[str(nivel)]['nombre']).encode("latin-1").decode("utf_8"))
+    await ctx.reply("Comenzando aventura.\nNivel {}: {}".format(nivel,niveles[str(nivel)]['nombre']).encode("latin-1").decode("es_ES.utf-8"))
 
 
 
