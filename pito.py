@@ -234,7 +234,7 @@ async def aventura(ctx):
     modo = niveles[str(nivel)]['modo']
     aciertos = 0
     media = 0
-    for i in range(1,11)
+    for i in range(1,11):
       print(i)
       continuar, elapsed, correcto = await entrenar(ctx,modo_elegido)
       media += media*(i-1) + elapsed/i 
