@@ -1,4 +1,3 @@
-
 #IMPORTS
 from ffprobe import FFProbe
 import os
@@ -7,13 +6,18 @@ import discord
 from datetime import datetime
 import pydub
 import asyncio
+from discord_components import ComponentsBot, Button#, Select, SelectOption #DiscordComponents,  
 
 #Custom imports
 import actjson as aj
 from tdform import timedeltaformatter as tdf
 import wave_gen as wg
 
-from discord_components import ComponentsBot, Button#, Select, SelectOption #DiscordComponents,  
+
+####################################################################################################
+################################# CONFIGURACIÓN E INICIALIZACIONES #################################
+####################################################################################################
+
 
 Bot = ComponentsBot(command_prefix="!",intents=discord.Intents.all())
 start = datetime.now()
@@ -30,56 +34,12 @@ async def on_ready():
   print('Sesión iniciada como {0.user}'.format(Bot))
   channel = Bot.get_channel(840366998315991061) #Parche
   await channel.send("¡Don Pito reconectado!")
-  #Bot.loop.create_task(hora())
 
-
-
-
-def get_comandos():
-    comandos = aj.abrir_json('DonPito/comandos.json')
-
-    str_entrenamiento = comandos["entrenamiento"]
-    str_entrenamiento = str_entrenamiento.replace(",","`\n`!")
-    str_entrenamiento = "`!" + str_entrenamiento + "`"
-    string_completa = str_entrenamiento
-
-    return string_completa
-
-@Bot.command()
-async def uptime(ctx):
-  global start
-  now = datetime.now()
-  elapsed = now - start
-  [dias, horas, minutos, segundos] = tdf(elapsed)
-  respuesta = "Llevo conectado "
-  if dias != 0:
-    respuesta += str(dias) + " días, " 
-  if horas!= 0:
-    respuesta += str(horas) + " horas, " 
-  if minutos != 0:
-    respuesta += str(minutos) + " minutos, " 
-  if segundos != 0:
-    seg = segundos - dias*24*3600 - horas*3600 - minutos*60
-    respuesta += str(round(seg)) + " segundos."
-  await ctx.reply(respuesta)
-  
-
-intervalos = [
-              "Unísono",
-              "2ª menor",
-              "2ª Mayor",
-              "3ª menor",
-              "3ª Mayor",
-              "4ª",
-              "Tritono",
-              "5ª",
-              "6ª menor",
-              "6ª mayor",
-              "7ª menor",
-              "7ª Mayor",
-              "Octava"]
-Botones_Intervalos = [
-              Button(label = intervalos[0],style = 1),
+intervalos = ["Unísono", "2ª menor", "2ª Mayor","3ª menor", "3ª Mayor",
+              "4ª", "Tritono", "5ª", "6ª menor", "6ª mayor","7ª menor",
+              "7ª Mayor", "Octava", "9ª menor", "9ª Mayor"]
+Botones_Intervalos = []
+'''              Button(label = intervalos[0],style = 1),
               Button(label = intervalos[1],style = 1),
               Button(label = intervalos[2],style = 1),
               Button(label = intervalos[3],style = 1),
@@ -91,10 +51,28 @@ Botones_Intervalos = [
               Button(label = intervalos[9],style = 1),
               Button(label = intervalos[10],style = 1),
               Button(label = intervalos[11],style = 1),
-              Button(label = intervalos[12],style = 1)]
+              Button(label = intervalos[12],style = 1)]''' #SI NO HA DADO ERROR, QUITAR ESTO
+
+for inter in intervalos:
+  new_boton = Button(label = inter,style = 1)
+  Botones_Intervalos.append(new_boton)
+
 ActionRow1 = Botones_Intervalos[0:4]
 ActionRow2 = Botones_Intervalos[4:9]
 ActionRow3 = Botones_Intervalos[9:]
+
+####################################################################################################
+################# FUNCIONES AUXILIARES QUE EN EL FUTURO METERÉ EN UN ARCHIVO APARTE ################
+####################################################################################################
+
+def get_comandos():
+    comandos = aj.abrir_json('DonPito/comandos.json')
+    str_entrenamiento = comandos["entrenamiento"]
+    str_entrenamiento = str_entrenamiento.replace(",","`\n`!")
+    str_entrenamiento = "`!" + str_entrenamiento + "`"
+    string_completa = str_entrenamiento
+
+    return string_completa
 
 def inscribir(ctx):
   padawans = aj.abrir_json("DonPito/padawans.json")
@@ -126,103 +104,6 @@ def esunnumero(mensaje):
       loes = False
   return loes
 
-
-##############################################################################################################################
-##############################################################################################################################
-##############################################################################################################################
-##############################################################################################################################
-##############################################################################################################################
-##############################################################################################################################
-##############################################################################################################################
-
-
-@Bot.command()
-async def niveles(ctx):
-  niveles = aj.abrir_json("DonPito/niveles.json")
-  i=1
-  respuesta = u"**NIVELES:** \n"
-  for nivel in niveles:
-    nivel_string = u"{}. {}\n".format(i,niveles[nivel]["nombre"]).encode("latin-1").decode("utf_8")
-    respuesta += nivel_string
-    i+=1
-
-  await ctx.reply(respuesta)
-
-  
-@Bot.command()
-async def aventura(ctx):
-  usr_id = ctx.author.id
-  padawans = aj.abrir_json("DonPito/padawans.json")
-  nivel = padawans[usr_id]['nivel_intervalos']
-
-
-@Bot.command()
-async def pito(ctx):
-  sonido = []
-  await ctx.send("Preparando pito... :smirk:",delete_after = 7)
-  exponente = random.uniform(1.7,3.6989)#3.69897
-  f = round(10**exponente)
-  lim = 1.2
-  tolerancia = [round(f/lim), round(f*lim)]
-  audio = wg.append_sinewave(freq = f,duration_milliseconds = 1000,volume = 0.3, audio = sonido)
-  wg.save_wav('tono_puro.wav', audio)
-  start=datetime.now()
-  informacion = "Adivina el número de Hz del tono puro. Rango: 50 - 5000 Hz."  
-  audio = await ctx.send(informacion, file=discord.File(r'tono_puro.wav'))
-  def check(frecuencia_msg):
-      return frecuencia_msg.author == ctx.author and frecuencia_msg.channel == ctx.channel and esunnumero(frecuencia_msg.content)
-  frecuencia_msg = await Bot.wait_for("message", check = check)
-  end=datetime.now()
-  elapsed = end-start
-  frecuencia = int(frecuencia_msg.content)
-
-  #AQUI PREMIAR O CASTIGAR
-  tiempo = tdf(elapsed)
-  segundos_totales = round(tiempo[0]*3600*24 + tiempo[1]*3600 + tiempo[2]*60 + tiempo[3], 2)
-  contenido = ":thought_balloon: Respuesta de "+ ctx.author.name + ": "
-  contenido += ":loud_sound: Respuesta correcta: " + str(f) +  " Hz.\n"
-  contenido += ":straight_ruler: Intervalo tolerancia: " + str(tolerancia) + " Hz.\n"
-  contenido += ":bar_chart: Te has equivocado en " + str(abs(frecuencia - f)) +" Hz."
-  footer = "Tiempo empleado por "+ ctx.author.name+ ": " + str(segundos_totales) +  " s."
-  if frecuencia <= tolerancia[0] or frecuencia >= tolerancia[1]: 
-    respuesta1 = ":x: *No pasas la prueba. Tu respuesta: " + str(frecuencia) + " Hz.*" 
-    color = 0xff0000
-  else:
-    respuesta1 = ":white_check_mark: *¡Prueba superada! Tu respuesta: " + str(frecuencia) + " Hz.*" 
-    color = 0x00c907
-    contenido +=  "+1 punto de experiencia. :chart_with_upwards_trend:"
-    dar_exp(ctx,1)
-
-  
-  os.remove('tono_puro.wav')
-  mensaje = discord.Embed(title = respuesta1, description = contenido, colour = color)
-  mensaje.set_footer(text = footer,icon_url = "https://images.emojiterra.com/google/android-pie/512px/23f1.png")
-  await ctx.send(embed = mensaje, reference = audio)
-
-@Bot.command()
-async def piano(ctx):
-  global piano
-  piano = True
-  await ctx.send("Sonido: Piano.")
-@Bot.command()
-async def tono(ctx):
-  global piano
-  piano = False
-  await ctx.send("Sonido: Tonos puros.")
-
-@Bot.command()
-async def exp(ctx):
-  usr_id = str(ctx.author.id)
-  usr_name = ctx.author.name
-  padawans = aj.abrir_json("DonPito/padawans.json")
-  if usr_id in padawans:
-    exp= padawans[usr_id]['exp']
-  else:
-    padawans = inscribir(ctx)
-    exp = padawans[usr_id]['exp']
-  respuesta = "El padawan **" + usr_name + "** tiene **" + str(exp) + "** puntos de experiencia :chart_with_upwards_trend:."
-  await ctx.reply(respuesta)
-
 def dar_exp(ctx,puntos):
   padawans = aj.abrir_json("DonPito/padawans.json")
   usr_id = str(ctx.author.id)
@@ -230,10 +111,6 @@ def dar_exp(ctx,puntos):
   exp += puntos
   padawans[usr_id]['exp'] = exp
   aj.actualizar_padawans(padawans)
-
-
-
-
 
 entrenador_ocupado = False
 def get_audio(modo,semitones):
@@ -279,7 +156,154 @@ def get_audio(modo,semitones):
         juntas = nota1.append(nota2, crossfade = 25)
 
       juntas.export("DonPito/test.mp3", format="mp3")
+
+
+##############################################################################################################################
+####################################################### COMANDOS #############################################################
+##############################################################################################################################
+
+###################### COMANDOS #######################
+
+@Bot.command()
+async def comandos(ctx):
+  respuesta = discord.Embed(title="__**COMANDOS**__" , color= 0x2a59a1)
+  comandos = get_comandos()
+  respuesta.add_field(name="Entrenamiento:", value = comandos)
+  await ctx.reply(embed=respuesta)
+
+####################### UPTIME ########################################################################
+
+@Bot.command()
+async def uptime(ctx):
+  global start
+  now = datetime.now()
+  elapsed = now - start
+  [dias, horas, minutos, segundos] = tdf(elapsed)
+  respuesta = "Llevo conectado "
+  if dias != 0:
+    respuesta += str(dias) + " días, " 
+  if horas!= 0:
+    respuesta += str(horas) + " horas, " 
+  if minutos != 0:
+    respuesta += str(minutos) + " minutos, " 
+  if segundos != 0:
+    seg = segundos - dias*24*3600 - horas*3600 - minutos*60
+    respuesta += str(round(seg)) + " segundos."
+  await ctx.reply(respuesta)
+
+###################### NIVELES ########################################################################
+
+@Bot.command()
+async def niveles(ctx):
+  niveles = aj.abrir_json("DonPito/niveles.json")
+  i=1
+  respuesta = u"**NIVELES:** \n"
+  for nivel in niveles:
+    nivel_string = u"{}. {}\n".format(i,niveles[nivel]["nombre"]).encode("latin-1").decode("utf_8")
+    respuesta += nivel_string
+    i+=1
+
+###################### AVENTURA #######################################################################
+
+@Bot.command()
+async def aventura(ctx):
+  usr_id = str(ctx.author.id)
+  padawans = aj.abrir_json("DonPito/padawans.json")
+  try:
+    nivel = padawans[usr_id]['nivel_intervalos']
+  except:
+    padawans[usr_id]['nivel_intervalos'] = 0
+    aj.actualizar_padawans(padawans)
+
+  nivel = padawans[usr_id]['nivel_intervalos']
+  ActionRowSiNo = [Button(label = "Sí",style = 3), Button(label = "No" ,style = 4)]
+  mensaje = "¿Quieres continuar la avenutra?"
+  Botones = await ctx.send(mensaje, components = [ActionRowSiNo])
+
+  def check(interaction):
+    return interaction.author == ctx.author
+
+  interaction = await Bot.wait_for("button_click",check=check)
+  await Botones.delete()
+  await ctx.reply(respuesta)
+
+####################### PITO ##########################################################################
+
+@Bot.command()
+async def pito(ctx):
+  sonido = []
+  await ctx.send("Preparando pito... :smirk:",delete_after = 7)
+  exponente = random.uniform(1.7,3.6989)#3.69897
+  f = round(10**exponente)
+  lim = 1.2
+  tolerancia = [round(f/lim), round(f*lim)]
+  audio = wg.append_sinewave(freq = f,duration_milliseconds = 1000,volume = 0.3, audio = sonido)
+  wg.save_wav('tono_puro.wav', audio)
+  start=datetime.now()
+  informacion = "Adivina el número de Hz del tono puro. Rango: 50 - 5000 Hz."  
+  audio = await ctx.send(informacion, file=discord.File(r'tono_puro.wav'))
+  def check(frecuencia_msg):
+      return frecuencia_msg.author == ctx.author and frecuencia_msg.channel == ctx.channel and esunnumero(frecuencia_msg.content)
+  frecuencia_msg = await Bot.wait_for("message", check = check)
+  end=datetime.now()
+  elapsed = end-start
+  frecuencia = int(frecuencia_msg.content)
+
+  #AQUI PREMIAR O CASTIGAR
+  tiempo = tdf(elapsed)
+  segundos_totales = round(tiempo[0]*3600*24 + tiempo[1]*3600 + tiempo[2]*60 + tiempo[3], 2)
+  contenido = ":thought_balloon: Respuesta de "+ ctx.author.name + ": "
+  contenido += ":loud_sound: Respuesta correcta: " + str(f) +  " Hz.\n"
+  contenido += ":straight_ruler: Intervalo tolerancia: " + str(tolerancia) + " Hz.\n"
+  contenido += ":bar_chart: Te has equivocado en " + str(abs(frecuencia - f)) +" Hz."
+  footer = "Tiempo empleado por "+ ctx.author.name+ ": " + str(segundos_totales) +  " s."
+  if frecuencia <= tolerancia[0] or frecuencia >= tolerancia[1]: 
+    respuesta1 = ":x: *No pasas la prueba. Tu respuesta: " + str(frecuencia) + " Hz.*" 
+    color = 0xff0000
+  else:
+    respuesta1 = ":white_check_mark: *¡Prueba superada! Tu respuesta: " + str(frecuencia) + " Hz.*" 
+    color = 0x00c907
+    contenido +=  "+1 punto de experiencia. :chart_with_upwards_trend:"
+    dar_exp(ctx,1)
+
+  os.remove('tono_puro.wav')
+  mensaje = discord.Embed(title = respuesta1, description = contenido, colour = color)
+  mensaje.set_footer(text = footer,icon_url = "https://images.emojiterra.com/google/android-pie/512px/23f1.png")
+  await ctx.send(embed = mensaje, reference = audio)
+
+
+#####################SONIDO#############################################################################################
+################################################
+@Bot.command()
+async def piano(ctx):
+  global piano
+  piano = True
+  await ctx.send("Sonido: Piano.")
+@Bot.command()
+async def tono(ctx):
+  global piano
+  piano = False
+  await ctx.send("Sonido: Tonos puros.")
+################################################
+################################################
+
+###################### EXPERIENCIA ############################################################################################
+
+@Bot.command()
+async def exp(ctx):
+  usr_id = str(ctx.author.id)
+  usr_name = ctx.author.name
+  padawans = aj.abrir_json("DonPito/padawans.json")
+  if usr_id in padawans:
+    exp= padawans[usr_id]['exp']
+  else:
+    padawans = inscribir(ctx)
+    exp = padawans[usr_id]['exp']
+  respuesta = "El padawan **" + usr_name + "** tiene **" + str(exp) + "** puntos de experiencia :chart_with_upwards_trend:."
+  await ctx.reply(respuesta)
       
+##################### CONTINUO ################################################################################################
+
 media = 0
 n = 0
 aciertos = 0
@@ -333,6 +357,7 @@ async def continuo(ctx,modo = 'aleatorio'):
     aciertos = 0 
     fallos = 0
     
+##################### ENTRENAR ################################################################################################
 
 @Bot.command()
 async def entrenar(ctx,modo = 'ascendente'):
@@ -383,11 +408,9 @@ async def entrenar(ctx,modo = 'ascendente'):
     await ctx.send(respuesta)
 
 
-@Bot.command()
-async def comandos(ctx):
-  respuesta = discord.Embed(title="__**COMANDOS**__" , color= 0x2a59a1)
-  comandos = get_comandos()
-  respuesta.add_field(name="Entrenamiento:", value = comandos)
-  await ctx.reply(embed=respuesta)
+################################################################################################
+################################# PASARLE EL TOKEN AL BOT ######################################
+################################################################################################
+
 token = aj.abrir_json('DonPito/token_pito.json')["token"]
 Bot.run(token) #token
