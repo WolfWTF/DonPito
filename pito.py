@@ -395,11 +395,11 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
     start=datetime.now()
 
     
-    if len(inter) =< 5:
+    if (len(inter) =< 5):
       compontentes = []
       for i in inter:
         componentes.append(Botones_Intervalos[i])
-    elif len(inter) =< 10:
+    elif (len(inter) =< 10):
       a=1
       ar1 = []
       ar2 = []
@@ -415,9 +415,9 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
       ar2 = []
       ar3 = []
       for i in inter():
-        if a =< 5:
+        if (a =< 5):
           ar1.append(Botones_Intervalos[i])
-        elif a <= 10:
+        elif (a <= 10):
           ar2.append(Botones_Intervalos[i])
         else:
           ar3.append(Botones_Intervalos[i])
