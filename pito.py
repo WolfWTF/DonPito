@@ -212,7 +212,7 @@ async def aventura(ctx):
   try:
     nivel = padawans[usr_id]['nivel_intervalos']
   except:
-    padawans[usr_id]['nivel_intervalos'] = 0
+    padawans[usr_id]['nivel_intervalos'] = 1
     aj.actualizar_padawans(padawans)
     nivel = padawans[usr_id]['nivel_intervalos']
   ActionRowSiNo = [Button(label = "Sí",style = 3), Button(label = "No" ,style = 4)]
@@ -221,15 +221,14 @@ async def aventura(ctx):
 
   def check(interaction):
     return interaction.author == ctx.author
-
   interaction = await Bot.wait_for("button_click",check=check)
   await Botones.delete()
-
   selec_usuario = interaction.component.label
   if selec_usuario == "No":
     await ctx.reply("Saliendo...", delete_after = 5)
-  elif == "Sí":
-    await ctx.reply("Comenzando aventura. Nivel: {}".format(nivel)
+  elif selec_usuario == "Sí":
+    niveles = aj.abrir_json("DonPito/niveles.json")
+    await ctx.reply("Comenzando aventura.\nNivel {}: {}".format(nivel,niveles[str(nivel)]['nombre']).encode("latin-1").decode("utf_8"))
 
 
 
@@ -366,7 +365,7 @@ async def continuo(ctx,modo = 'aleatorio'):
 ##################### ENTRENAR ################################################################################################
 
 @Bot.command()
-async def entrenar(ctx,modo = 'ascendente'):
+async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
   if modo == 'aleatorio':
     modo = random.choice(['ascendente','descendente','simultaneo'])
   global entrenador_ocupado
@@ -375,7 +374,7 @@ async def entrenar(ctx,modo = 'ascendente'):
     #PREPARAMOS EL AUDIO
     with ctx.channel.typing():
       await ctx.send("Preparando entrenamiento...",delete_after = 5)
-      semitones = random.randint(0,12)
+      semitones = random.choice(inter)
       get_audio(modo,semitones)
       #### SE ENVIA EL AUDIO
       audio = await ctx.send(file=discord.File(r'DonPito/test.mp3'))
