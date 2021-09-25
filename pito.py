@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: latin-1 -*-
 #IMPORTS
 from ffprobe import FFProbe
 import os
