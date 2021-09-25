@@ -410,6 +410,7 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
           ar2.append(Botones_Intervalos[i])
       componentes = [ar1,ar2]
     else:
+      print("hola, tengo {} botones".format(len(inter)+1))
       a=1
       ar1 = []
       ar2 = []
