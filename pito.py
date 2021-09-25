@@ -414,7 +414,7 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
       ar1 = []
       ar2 = []
       ar3 = []
-      for i in inter():
+      for i in inter:
         if (a <= 5):
           ar1.append(Botones_Intervalos[i])
         elif (a <= 10):
