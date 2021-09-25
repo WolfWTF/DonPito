@@ -234,13 +234,23 @@ async def aventura(ctx):
     modo = niveles[str(nivel)]['modo']
     aciertos = 0
     media = 0
-    for i in range(1,4):
+    for i in range(1,11):
       continuar, elapsed, correcto = await entrenar(ctx,modo,interv)
       tiempo = tdf(elapsed)
       segundos_totales = round(tiempo[0]*3600*24 + tiempo[1]*3600 + tiempo[2]*60 + tiempo[3], 2)
       media += media*(i-1) + segundos_totales/i 
       if correcto:
         aciertos += 1
+
+    resultados = "Aciertos: {}/10. ".format(aciertos)
+    if aciertos >= 7:
+      resultados += ":white_check_mark: Has superado la prueba, pasas al nivel {}.".format(nivel+1)
+      padawans[usr_id]["nivel_intervalos"] += 1
+      aj.actualizar_padawans(padawans)
+    else:
+      resultados += ":x: No has superado la prueba. Inténtalo de nuevo."
+    respuesta = discord.Embed(title = "Resultados:", description = resultados)
+    await ctx.send(respuesta)
 
 ####################### PITO ##########################################################################
 
