@@ -451,11 +451,11 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
       return True, elapsed, correcto
     else:
       respuesta = "Deteniendo..."
-      await ctx.send(respuesta)
+      await ctx.send(respuesta, delete_after=5)
       return False, elapsed, False
   else:
     respuesta = "Estoy entrenando a otro usuario."
-    await ctx.send(respuesta)
+    await ctx.send(respuesta, delete_after=5)
 
 
 ################################################################################################
