@@ -427,7 +427,7 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
         a += 1
 
       stop_button = Button(label="Stop",style=4)
-      componentes = [ar1,ar2,ar3,[stop_button]]  
+      componentes = [ar1,ar2,ar3,stop_button]  
 
     Botones = await ctx.send("Opciones:", components = componentes)
 
