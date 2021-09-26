@@ -79,8 +79,6 @@ def corregir(ctx,selec_usuario,respuesta_correcta,elapsed):
     #DEPENDE LA EXPERIENCIA DE LA OCTAVA OCTAVA CENTRAL +1, EN ESPEJO +2 Y +3
     experiencia = dar_exp(ctx,1)# por qué a Alex no le ha dado la experiencia?
     respuesta = ":white_check_mark:  **{}**  :white_check_mark:  ¡Muy bien, {}!Tiempo: {} s.\n +1 punto de experiencia. Puntos totales: {}".format(selec_usuario,usuario.name,str(segundos_totales),experiencia)
-    
-    
   else:
     respuesta =":x:  **{}**  :x:  Respuesta correcta: **{}**.".format(selec_usuario, respuesta_correcta)
   return respuesta, correcto
@@ -101,6 +99,7 @@ def dar_exp(ctx,puntos):
   exp += puntos
   padawans[usr_id]['exp'] = exp
   aj.actualizar_padawans(padawans)
+  return exp
 
 entrenador_ocupado = False
 def get_audio(modo,semitones):
@@ -406,14 +405,14 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
     start=datetime.now()
 
     stop_button = Button(label="Stop",style=4)
+    ar1=[]  
+    a=1
     if (len(inter) <= 5):
-      ar1=[]
       for i in inter:
         ar1.append(Botones_Intervalos[i])
       componentes = [ar1,[stop_button]]
     elif (len(inter) <= 10):
-      a=1
-      ar1 = []
+      
       ar2 = []
       for i in inter():
         if a <= 5:
@@ -424,8 +423,6 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
       a+=1
 
     else:
-      a=1
-      ar1 = []
       ar2 = []
       ar3 = []
       for i in inter:
