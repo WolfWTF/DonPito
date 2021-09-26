@@ -76,10 +76,13 @@ def corregir(ctx,selec_usuario,respuesta_correcta,elapsed):
   segundos_totales = round(tiempo[0]*3600*24 + tiempo[1]*3600 + tiempo[2]*60 + tiempo[3], 2)
 
   if correcto:
-    respuesta = ":white_check_mark:  **" + selec_usuario + "**  :white_check_mark:  ¡Muy bien, " + usuario.name +"!" + " Tiempo: " + str(segundos_totales) + " s.\n +1 punto de experiencia."
-    dar_exp(ctx,1)
+    #DEPENDE LA EXPERIENCIA DE LA OCTAVA OCTAVA CENTRAL +1, EN ESPEJO +2 Y +3
+    experiencia = dar_exp(ctx,1)# por qué a Alex no le ha dado la experiencia?
+    respuesta = ":white_check_mark:  **{}**  :white_check_mark:  ¡Muy bien, {}!Tiempo: {} s.\n +1 punto de experiencia. Puntos totales: {}".format(selec_usuario,usuario.name,str(segundos_totales),experiencia)
+    
+    
   else:
-    respuesta =":x:  **" + selec_usuario +"**  :x:  Respuesta correcta: **" + respuesta_correcta +"**."
+    respuesta =":x:  **{}**  :x:  Respuesta correcta: **{}**.".format(selec_usuario, respuesta_correcta)
   return respuesta, correcto
 
 piano = True
@@ -103,16 +106,20 @@ entrenador_ocupado = False
 def get_audio(modo,semitones):
       global piano
       if piano:
-        lim_asc =[0,75]
-        lim_des =[11,87]
+        lim_asc = [0,75]
+        lim_des = [11,87]
       else:
-        lim_asc =[1,37]
-        lim_des =[12,49]
+        lim_asc = [1,37]
+        lim_des = [12,49]
       #start=datetime.now()
 
-      if(modo == 'ascendente' or modo == 'simultaneo'):
+      if(modo == 'ascendente'):
         n1 = random.randint(lim_asc[0],lim_asc[1])
         n2 = n1 + semitones
+
+      elif(modo == 'simultaneo'):
+        n1 = random.randint(28,75)
+        n2 = n1 + semitones        
         
       elif(modo =='descendente'):
         n1 = random.randint(lim_des[0],lim_des[1])
@@ -190,6 +197,7 @@ async def niveles(ctx):
     respuesta += nivel_string
     i+=1
   await ctx.reply(respuesta)
+
 ###################### AVENTURA #######################################################################
 
 @Bot.command()
@@ -277,7 +285,7 @@ async def pito(ctx):
   else:
     respuesta1 = ":white_check_mark: *¡Prueba superada! Tu respuesta: " + str(frecuencia) + " Hz.*" 
     color = 0x00c907
-    contenido +=  "+1 punto de experiencia. :chart_with_upwards_trend:"
+    contenido +=  " +1 punto de experiencia. :chart_with_upwards_trend:"
     dar_exp(ctx,1)
 
   os.remove('tono_puro.wav')
@@ -317,6 +325,7 @@ async def exp(ctx):
   await ctx.reply(respuesta)
       
 ##################### CONTINUO ################################################################################################
+#ADAPTAR AL NIVEL DEL USUARIO
 
 media = 0
 n = 0
@@ -372,7 +381,7 @@ async def continuo(ctx,modo = 'aleatorio'):
     fallos = 0
     
 ##################### ENTRENAR ################################################################################################
-
+#ADAPTAR AL NIVEL DEL USUARIO
 @Bot.command()
 async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
   if modo == 'aleatorio':
