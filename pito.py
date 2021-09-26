@@ -394,12 +394,12 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
     #MANDAMOS LOS BOTONES Y ESPERAMOS A QUE SE PULSEN
     start=datetime.now()
 
-    
+    stop_button = Button(label="Stop",style=4)
     if (len(inter) <= 5):
       ar1=[]
       for i in inter:
         ar1.append(Botones_Intervalos[i])
-      componentes = [ar1]
+      componentes = [ar1,[stop_button]]
     elif (len(inter) <= 10):
       a=1
       ar1 = []
@@ -409,7 +409,7 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
           ar1.append(Botones_Intervalos[i])
         else:
           ar2.append(Botones_Intervalos[i])
-      componentes = [ar1,ar2]
+      componentes = [ar1,ar2,[stop_button]]
       a+=1
 
     else:
@@ -426,8 +426,8 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
           ar3.append(Botones_Intervalos[i])
         a += 1
 
-      stop_button = Button(label="Stop",style=4)
-      componentes = [ar1,ar2,ar3,stop_button]  
+      
+      componentes = [ar1,ar2,ar3,[stop_button]]  
 
     Botones = await ctx.send("Opciones:", components = componentes)
 
