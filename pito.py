@@ -447,7 +447,7 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
       respuesta, correcto = corregir(ctx,selec_usuario, respuesta_correcta,elapsed)
       await ctx.send(respuesta, reference = audio)
       ### aqui habría que premiar o castigar en funcion del boolean "correcto". aqui o en corregir?
-      entrenador_ocupado = True
+      entrenador_ocupado = False
       return True, elapsed, correcto
     else:
       respuesta = "Deteniendo..."
