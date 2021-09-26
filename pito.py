@@ -223,6 +223,8 @@ async def aventura(ctx):
     media = 0
     for i in range(1,11):
       continuar, elapsed, correcto = await entrenar(ctx,modo,interv)
+      if not continuar:
+        return
       tiempo = tdf(elapsed)
       segundos_totales = round(tiempo[0]*3600*24 + tiempo[1]*3600 + tiempo[2]*60 + tiempo[3], 2)
       media += media*(i-1) + segundos_totales/i 
