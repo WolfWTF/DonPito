@@ -237,6 +237,8 @@ async def aventura(ctx):
       if correcto:
         aciertos += 1
 
+    padawans = aj.abrir_json("DonPito/padawans.json")
+
     resultados = "Aciertos: {}/10. ".format(aciertos)
     if aciertos >= 7:
       resultados += ":white_check_mark: Has superado la prueba, pasas al nivel {}.".format(nivel+1)
