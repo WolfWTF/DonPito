@@ -78,6 +78,7 @@ def corregir(ctx,selec_usuario,respuesta_correcta,elapsed):
   if correcto:
     #DEPENDE LA EXPERIENCIA DE LA OCTAVA OCTAVA CENTRAL +1, EN ESPEJO +2 Y +3
     experiencia = dar_exp(ctx,1)# por qué a Alex no le ha dado la experiencia?
+    print("Usuario {}, {} puntos".format(usuario,experiencia))
     respuesta = ":white_check_mark:  **{}**  :white_check_mark:  ¡Muy bien, {}!Tiempo: {} s.\n +1 punto de experiencia. Puntos totales: {}".format(selec_usuario,usuario.name,str(segundos_totales),experiencia)
   else:
     respuesta =":x:  **{}**  :x:  Respuesta correcta: **{}**.".format(selec_usuario, respuesta_correcta)
@@ -180,15 +181,6 @@ async def uptime(ctx):
   segundos = round(segundos - dias*24*3600 - horas*3600 - minutos*60)
   s = (segundos != 0)*"{} segundos.".format(segundos)
   respuesta = "Llevo conectado {}{}{}{}".format(d,h,m,s)
-  '''  if dias != 0:
-    respuesta += str(dias) + " días, " 
-  if horas!= 0:
-    respuesta += str(horas) + " horas, " 
-  if minutos != 0:
-    respuesta += str(minutos) + " minutos, " 
-  if segundos != 0:
-    seg = segundos - dias*24*3600 - horas*3600 - minutos*60
-    respuesta += str(round(seg)) + " segundos."'''
   await ctx.reply(respuesta)
 
 ###################### NIVELES ########################################################################
@@ -210,14 +202,16 @@ async def niveles(ctx):
 async def aventura(ctx):
   usr_id = str(ctx.author.id)
   padawans = aj.abrir_json("DonPito/padawans.json")
-  try:
+  #try:
+  if usr_id in padawans:
     nivel = padawans[usr_id]['nivel_intervalos']
-  except:
+  #except:
+  else:
     padawans[usr_id]['nivel_intervalos'] = 1
     aj.actualizar_padawans(padawans)
     nivel = padawans[usr_id]['nivel_intervalos']
   ActionRowSiNo = [Button(label = "Sí",style = 3), Button(label = "No" ,style = 4)]
-  mensaje = "¿Quieres continuar la avenutra?"
+  mensaje = "¿Quieres continuar la avenutra interválica?"
   Botones = await ctx.send(mensaje, components = [ActionRowSiNo])
 
   def check(interaction):
