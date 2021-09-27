@@ -177,7 +177,7 @@ async def uptime(ctx):
   d = (dias != 0)*"{} días,".format(dias)
   h = (horas!= 0)*"{} horas,".format(horas)
   m = (minutos != 0)*"{} minutos,".format(minutos)
-  segundos = segundos - dias*24*3600 - horas*3600 - minutos*60
+  segundos = round(segundos - dias*24*3600 - horas*3600 - minutos*60)
   s = (segundos != 0)*"{} segundos.".format(segundos)
   respuesta = "Llevo conectado {} {} {} {}".format(d,h,m,s)
   '''  if dias != 0:
