@@ -96,11 +96,9 @@ def esunnumero(mensaje):
 def dar_exp(ctx,puntos):
   padawans = aj.abrir_json("DonPito/padawans.json")
   usr_id = str(ctx.author.id)
-  print(usr_id)
   exp = padawans[usr_id]['exp']
   exp += puntos
   padawans[usr_id]['exp'] = exp
-  print(padawans)
   aj.actualizar_padawans(padawans)
   return exp
 
