@@ -78,7 +78,7 @@ def corregir(ctx,selec_usuario,respuesta_correcta,elapsed):
   if correcto:
     #DEPENDE LA EXPERIENCIA DE LA OCTAVA OCTAVA CENTRAL +1, EN ESPEJO +2 Y +3
     experiencia = dar_exp(ctx,1)# por qué a Alex no le ha dado la experiencia?
-    respuesta = ":white_check_mark:  **{}**  :white_check_mark:  ¡Muy bien, {}!Tiempo: {} s.\n +1 punto de experiencia. Puntos totales: {}".format(selec_usuario,usuario.name,str(segundos_totales),experiencia)
+    respuesta = ":white_check_mark:  **{}**  :white_check_mark:  ¡Muy bien, {}!Tiempo: {} s.\n +1 punto de exp. Puntos totales: {}".format(selec_usuario,usuario.name,str(segundos_totales),experiencia)
   else:
     respuesta =":x:  **{}**  :x:  Respuesta correcta: **{}**.".format(selec_usuario, respuesta_correcta)
   return respuesta, correcto
@@ -236,8 +236,8 @@ async def aventura(ctx):
       if correcto:
         aciertos += 1
 
+    #ACTUALIZAMOS PADAWANS
     padawans = aj.abrir_json("DonPito/padawans.json")
-
     resultados = "Aciertos: {}/10. ".format(aciertos)
     if aciertos >= 7:
       resultados += ":white_check_mark: Has superado la prueba, pasas al nivel {}.".format(nivel+1)
@@ -273,18 +273,22 @@ async def pito(ctx):
   #AQUI PREMIAR O CASTIGAR
   tiempo = tdf(elapsed)
   segundos_totales = round(tiempo[0]*3600*24 + tiempo[1]*3600 + tiempo[2]*60 + tiempo[3], 2)
-  contenido = ":thought_balloon: Respuesta de "+ ctx.author.name + ": "
-  contenido += ":loud_sound: Respuesta correcta: " + str(f) +  " Hz.\n"
-  contenido += ":straight_ruler: Intervalo tolerancia: " + str(tolerancia) + " Hz.\n"
-  contenido += ":bar_chart: Te has equivocado en " + str(abs(frecuencia - f)) +" Hz."
-  footer = "Tiempo empleado por "+ ctx.author.name+ ": " + str(segundos_totales) +  " s."
+  contenido =  """:thought_balloon: {}: {} Hz.
+                  :loud_sound: Respuesta correcta: {} Hz.
+                  :straight_ruler: Tolerancia: {} Hz.
+                  :bar_chart: Error de {} Hz.""".format(ctx.author.name, f, tolerancia, abs(frecuencia - f), segundos_totales)
+  '''contenido = ":thought_balloon: Respuesta de "+ ctx.author.name + ": "
+        contenido += ":loud_sound: Respuesta correcta: " + str(f) +  " Hz.\n"
+        contenido += ":straight_ruler: Intervalo tolerancia: " + str(tolerancia) + " Hz.\n"
+        contenido += ":bar_chart: Te has equivocado en " + str(abs(frecuencia - f)) +" Hz."'''
+  footer = "Tiempo: {}s.".format(segundos_totales)
   if frecuencia <= tolerancia[0] or frecuencia >= tolerancia[1]: 
-    respuesta1 = ":x: *No pasas la prueba. Tu respuesta: " + str(frecuencia) + " Hz.*" 
+    respuesta1 = ":x: *No pasas la prueba.*"
     color = 0xff0000
   else:
-    respuesta1 = ":white_check_mark: *¡Prueba superada! Tu respuesta: " + str(frecuencia) + " Hz.*" 
+    respuesta1 = ":white_check_mark: *¡Prueba superada!*"
     color = 0x00c907
-    contenido +=  " +1 punto de experiencia. :chart_with_upwards_trend:"
+    contenido +=  " +1 punto de exp. :chart_with_upwards_trend:"
     dar_exp(ctx,1)
 
   os.remove('tono_puro.wav')
@@ -320,7 +324,7 @@ async def exp(ctx):
   else:
     padawans = inscribir(ctx)
     exp = padawans[usr_id]['exp']
-  respuesta = "El padawan **" + usr_name + "** tiene **" + str(exp) + "** puntos de experiencia :chart_with_upwards_trend:."
+  respuesta = "El padawan **{}** tiene **{}** puntos de exp :chart_with_upwards_trend:.".format(usr_name, exp)
   await ctx.reply(respuesta)
       
 ##################### CONTINUO ################################################################################################
@@ -366,11 +370,10 @@ async def continuo(ctx,modo = 'aleatorio'):
   else:
     m = round(tdf(media)[3],2)
     respuesta = discord.Embed(title = "*Resultados:*",color= 0x2a59a1)
-    nombre = str(n-1) + " pruebas:"
-    valor = ":white_check_mark: Aciertos: " + str(aciertos) + ". \n"
-    valor += ":x: Fallos: " + str(fallos) + ". \n"
-    valor += ":timer: Media: " + str(m) + " segundos."
-
+    nombre = "{} pruebas:".format(n-1)
+    valor =  """:white_check_mark: Aciertos: {}.
+                :x: Fallos: {}.
+                :timer: Media: {} segundos.""".format(aciertos,fallos,m)
     respuesta.add_field(name = nombre, value= valor)
      
     await ctx.reply(embed=respuesta)
@@ -452,7 +455,6 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
     if selec_usuario != "Stop":
       respuesta, correcto = corregir(ctx,selec_usuario, respuesta_correcta,elapsed)
       await ctx.send(respuesta, reference = audio)
-      ### aqui habría que premiar o castigar en funcion del boolean "correcto". aqui o en corregir?
       entrenador_ocupado = False
       return True, elapsed, correcto
     else:
