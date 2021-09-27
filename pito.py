@@ -174,8 +174,13 @@ async def uptime(ctx):
   now = datetime.now()
   elapsed = now - start
   [dias, horas, minutos, segundos] = tdf(elapsed)
-  respuesta = "Llevo conectado "
-  if dias != 0:
+  d = (dias != 0)*"{} días,".format(dias)
+  h = (horas!= 0)*"{} horas,".format(horas)
+  m = (minutos != 0)*"{} minutos,".format(minutos)
+  segundos = segundos - dias*24*3600 - horas*3600 - minutos*60
+  s = (segundos != 0)*"{} segundos.".format(segundos)
+  respuesta = "Llevo conectado {} {} {} {}".format(d,h,m,s)
+  '''  if dias != 0:
     respuesta += str(dias) + " días, " 
   if horas!= 0:
     respuesta += str(horas) + " horas, " 
@@ -183,7 +188,7 @@ async def uptime(ctx):
     respuesta += str(minutos) + " minutos, " 
   if segundos != 0:
     seg = segundos - dias*24*3600 - horas*3600 - minutos*60
-    respuesta += str(round(seg)) + " segundos."
+    respuesta += str(round(seg)) + " segundos."'''
   await ctx.reply(respuesta)
 
 ###################### NIVELES ########################################################################
