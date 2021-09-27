@@ -78,7 +78,6 @@ def corregir(ctx,selec_usuario,respuesta_correcta,elapsed):
   if correcto:
     #DEPENDE LA EXPERIENCIA DE LA OCTAVA OCTAVA CENTRAL +1, EN ESPEJO +2 Y +3
     experiencia = dar_exp(ctx,1)# por qué a Alex no le ha dado la experiencia?
-    print("Usuario {}, {} puntos".format(usuario,experiencia))
     respuesta = ":white_check_mark:  **{}**  :white_check_mark:  ¡Muy bien, {}!Tiempo: {} s.\n +1 punto de experiencia. Puntos totales: {}".format(selec_usuario,usuario.name,str(segundos_totales),experiencia)
   else:
     respuesta =":x:  **{}**  :x:  Respuesta correcta: **{}**.".format(selec_usuario, respuesta_correcta)
