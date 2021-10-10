@@ -107,7 +107,7 @@ def get_escala(escala,direccion="ascendente"):
   start = random.randint(lim_asc[0],lim_asc[1])
   info = aj.abrir_json("DonPito/piano/info.json")
   notas = info['keys']
-  audio = pydub.AudioSegment.silent(duration=1)
+  audio = pydub.AudioSegment.silent(duration=25)
   print(type(escala))
   for i in escala:
     #notas.append(start + i)
