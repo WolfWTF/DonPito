@@ -108,10 +108,10 @@ def get_escala(escala,direccion="ascendente"):
   info = aj.abrir_json("DonPito/piano/info.json")
   notas = info['keys']
   audio = pydub.AudioSegment.silent(duration=1)
-  print(escala)
+  print(type(escala))
   for i in escala:
     #notas.append(start + i)
-    n_nota = start + i
+    n_nota = start + int(i)
     print(n_nota)
     nombre_nota = "DonPito/piano/" + notas[n_nota] +".mp3"
     #fnota1 = open(nota1_nombre,'rb')
