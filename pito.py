@@ -516,7 +516,7 @@ async def modos(ctx):
     respuesta = ":white_check_mark: Correcto! {}.".format(respuesta_correcta)
   else:
     respuesta = ":x: Incorrecto. El modo era {}, no {}.".format(respuesta_correcta, selec_usuario)
-  await ctx.reply(respuesta,reference = audio)
+  await ctx.send(respuesta,reference = audio)
 
 ################################################################################################
 ################################# PASARLE EL TOKEN AL BOT ######################################
