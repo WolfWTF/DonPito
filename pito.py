@@ -486,7 +486,7 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
 
 @Bot.command()
 async def modos(ctx):
-  lista = aj.abrir_json("DonPito/modos.json")
+  lista = aj.abrir_json("DonPito/modos.json").encode("utf-8")
   mayor = lista["mayor"]
   modos_mayor = list(mayor.keys())
 
