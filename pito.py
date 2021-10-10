@@ -489,6 +489,7 @@ async def modos(ctx):
   lista = aj.abrir_json("DonPito/modos.json")
   mayor = lista["mayor"]
   modos_mayor = list(mayor.keys())
+  print(str(modos_mayor))
   botoncitos = []
   for modo in modos_mayor:
     new_boton = Button(label = modo, style = 1)
