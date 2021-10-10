@@ -108,11 +108,9 @@ def get_escala(escala,direccion="ascendente"):
   info = aj.abrir_json("DonPito/piano/info.json")
   notas = info['keys']
   audio = pydub.AudioSegment.silent(duration=25)
-  print(type(escala))
   for i in escala:
     #notas.append(start + i)
     n_nota = start + int(i)
-    print(n_nota)
     nombre_nota = "DonPito/piano/" + notas[n_nota] +".mp3"
     #fnota1 = open(nota1_nombre,'rb')
     nota = pydub.AudioSegment.from_file(nombre_nota)
@@ -491,13 +489,32 @@ async def modos(ctx):
   lista = aj.abrir_json("DonPito/modos.json")
   mayor = lista["mayor"]
   modos_mayor = list(mayor.keys())
+  botoncitos = []
+  for modo in modos_mayor:
+    new_boton = Button(label = modo, style = 1)
+    botoncitos.append(new_boton)
+  row1 = Botones_Intervalos[0:3]
+  row2 = Botones_Intervalos[3:]
+
   respuesta_correcta = random.choice(modos_mayor)
   escala = lista["mayor"][respuesta_correcta]
   await ctx.send("Preparando entrenamiento...",delete_after=5)
   get_escala(escala)
   audio = await ctx.send(file=discord.File(r'DonPito/modo.mp3'))
-
-
+  start=datetime.now()    
+  componentes = [row1,row2]  
+  Botones = await ctx.send("Opciones:", components = componentes)
+  def check(interaction):
+    return interaction.author == ctx.author
+  interaction = await Bot.wait_for("button_click",check=check)
+  end=datetime.now()
+  elapsed = end-start
+  await Botones.delete()
+  selec_usuario = interaction.component.label
+  if selec_usuario == respuesta_correcta:
+    respuesta = ":white_check_mark: Correcto! {}.".format(respuesta_correcta)
+  else:
+    respuesta = ":x: Incorrecto. El modo era {}, no {}.".format(respuesta_correcta, selec_usuario)
 
 
 ################################################################################################
