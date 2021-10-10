@@ -492,8 +492,9 @@ async def modos(ctx):
   mayor = lista["mayor"]
   modos_mayor = list(mayor.keys())
   respuesta_correcta = random.choice(modos_mayor)
+  escala = lista["mayor"][respuesta_correcta]
   await ctx.send("Preparando entrenamiento...",delete_after=5)
-  get_escala(respuesta_correcta)
+  get_escala(escala)
   audio = await ctx.send(file=discord.File(r'DonPito/modo.mp3'))
 
 
