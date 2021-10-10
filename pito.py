@@ -486,12 +486,13 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
 
 @Bot.command()
 async def modos(ctx):
-  lista = aj.abrir_json("DonPito/modos.json").encode("utf-8")
+  lista = aj.abrir_json("DonPito/modos.json")
   mayor = lista["mayor"]
   modos_mayor = list(mayor.keys())
 
   botoncitos = []
   for modo in modos_mayor:
+    modo = modo.encode("utf-8")
     new_boton = Button(label = modo, style = 1)
     botoncitos.append(new_boton)
   row1 = botoncitos[0:3]
