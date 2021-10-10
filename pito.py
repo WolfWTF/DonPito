@@ -104,7 +104,7 @@ def dar_exp(ctx,puntos):
 def get_escala(escala,direccion="ascendente"):
   #Falta implementar las direcciones
   lim_asc =[20,60]
-  start = randint(lim_asc[0],lim_asc[1])
+  start = random.randint(lim_asc[0],lim_asc[1])
   info = aj.abrir_json("DonPito/piano/info.json")
   notas = info['keys']
   audio = pydub.AudioSegment.silent(duration=1)
@@ -495,7 +495,7 @@ async def modos(ctx):
   await ctx.send("Preparando entrenamiento...",delete_after=5)
   get_escala(respuesta_correcta)
   audio = await ctx.send(file=discord.File(r'DonPito/modo.mp3'))
-  
+
 
 
 
