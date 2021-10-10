@@ -10,7 +10,7 @@ def actualizar_padawans(padawans):
 #Esta función abre un archivo json y carga su contenido en la variable que devuelve.
 def abrir_json(nombre_archivo):
   #with open(nombre_archivo,"r",encoding='latin-1') as jsonFile:
-  with open("Data/Lines.json","rb") as jsonFile:
+  with open(nombre_archivo,"rb") as jsonFile:
     objeto_json = json.load(jsonFile, encoding="utf-8")
     jsonFile.close()
   return objeto_json
