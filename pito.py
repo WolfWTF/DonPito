@@ -492,11 +492,10 @@ async def modos(ctx):
 
   botoncitos = []
   for modo in modos_mayor:
-    print(modo)
     new_boton = Button(label = modo, style = 1)
     botoncitos.append(new_boton)
-  row1 = Botones_Intervalos[0:3]
-  row2 = Botones_Intervalos[3:7]
+  row1 = botoncitos[0:3]
+  row2 = botoncitos[3:]
 
   respuesta_correcta = random.choice(modos_mayor)
   escala = lista["mayor"][respuesta_correcta]
