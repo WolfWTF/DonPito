@@ -101,6 +101,26 @@ def dar_exp(ctx,puntos):
   aj.actualizar_padawans(padawans)
   return exp
 
+def get_escala(escala,direccion="ascendente"):
+  #Falta implementar las direcciones
+  lim_asc =[20,60]
+  start = randint(lim_asc[0],lim_asc[1])
+  info = aj.abrir_json("DonPito/piano/info.json")
+  notas = info['keys']
+  audio = pydub.AudioSegment.silent(duration=1)
+  print(escala)
+  for i in escala:
+    #notas.append(start + i)
+    n_nota = start + i
+    print(n_nota)
+    nombre_nota = "DonPito/piano/" + notas[n_nota] +".mp3"
+    #fnota1 = open(nota1_nombre,'rb')
+    nota = pydub.AudioSegment.from_file(nombre_nota)
+    #fnota1.close()
+    audio = audio.append(nota, crossfade = 25)
+    audio.export("DonPito/modo.mp3", format="mp3")
+
+
 entrenador_ocupado = False
 def get_audio(modo,semitones):
       global piano
@@ -465,6 +485,18 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
   else:
     respuesta = "Estoy entrenando a otro usuario."
     await ctx.send(respuesta, delete_after=5)
+
+@Bot.command()
+async def modos(ctx):
+  lista = aj.abrir_json("DonPito/modos.json")
+  mayor = lista["mayor"]
+  modos_mayor = list(mayor.keys())
+  respuesta_correcta = random.choice(modos_mayor)
+  await ctx.send("Preparando entrenamiento...",delete_after=5)
+  get_escala(respuesta_correcta)
+  audio = await ctx.send(file=discord.File(r'DonPito/modo.mp3'))
+  
+
 
 
 ################################################################################################
