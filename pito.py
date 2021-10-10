@@ -492,7 +492,7 @@ async def modos(ctx):
 
   botoncitos = []
   for modo in modos_mayor:
-    modo = str(modo).encode("utf-8")
+    modo = modo.encode("utf-8")
     new_boton = Button(label = modo, style = 1)
     botoncitos.append(new_boton)
   row1 = botoncitos[0:3]
