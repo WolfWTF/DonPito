@@ -484,6 +484,7 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
     respuesta = "Estoy entrenando a otro usuario."
     await ctx.send(respuesta, delete_after=5)
 
+#################### MODOS #########################
 @Bot.command()
 async def modos(ctx):
   lista = aj.abrir_json("DonPito/modos.json")
@@ -514,6 +515,7 @@ async def modos(ctx):
   selec_usuario = interaction.component.label
   if selec_usuario == respuesta_correcta:
     respuesta = ":white_check_mark: Correcto! {}.".format(respuesta_correcta)
+    dar_exp(ctx,1)
   else:
     respuesta = ":x: Incorrecto. El modo era {}, no {}.".format(respuesta_correcta, selec_usuario)
   await ctx.send(respuesta,reference = audio)
