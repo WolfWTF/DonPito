@@ -69,9 +69,8 @@ def inscribir(ctx):
   aj.actualizar_padawans(padawans)
   return padawans
 
-def corregir(ctx,selec_usuario,respuesta_correcta,elapsed):
+def corregir(ctx,usuario,selec_usuario,respuesta_correcta,elapsed):
   correcto = selec_usuario == respuesta_correcta
-  usuario = ctx.author
   tiempo = tdf(elapsed)
   segundos_totales = round(tiempo[0]*3600*24 + tiempo[1]*3600 + tiempo[2]*60 + tiempo[3], 2)
 
@@ -403,7 +402,7 @@ async def continuo(ctx,modo = 'aleatorio'):
 ##################### ENTRENAR ################################################################################################
 #ADAPTAR AL NIVEL DEL USUARIO
 @Bot.command()
-async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
+async def entrenar(ctx,modo = 'ascendente', inter = range(0,13),usr2=None):
   if modo == 'aleatorio':
     modo = random.choice(['ascendente','descendente','simultaneo'])
   global entrenador_ocupado
@@ -461,28 +460,71 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13)):
     Botones = await ctx.send("Opciones:", components = componentes)
 
     def check(interaction):
-      return interaction.author == ctx.author
+      return interaction.author == ctx.author or interaction.author == usr2
 
     interaction = await Bot.wait_for("button_click",check=check)
     end=datetime.now()
     elapsed = end-start
     await Botones.delete()
     selec_usuario = interaction.component.label
+    usuario = interaction.author
+
+    #¿qué pasa si el más rápido FALLA?
 
     #CORREGIMOS
     if selec_usuario != "Stop":
-      respuesta, correcto = corregir(ctx,selec_usuario, respuesta_correcta,elapsed)
+      respuesta, correcto = corregir(ctx,usuario,selec_usuario, respuesta_correcta,elapsed)
       await ctx.send(respuesta, reference = audio)
       entrenador_ocupado = False
-      return True, elapsed, correcto
+      return True, elapsed, correcto, usuario
     else:
       respuesta = "Deteniendo..."
       entrenador_ocupado = False
       await ctx.send(respuesta, delete_after=5)
-      return False, elapsed, False
+      return False, elapsed, False, usuario
   else:
     respuesta = "Estoy entrenando a otro usuario."
     await ctx.send(respuesta, delete_after=5)
+
+#################### DUELO #####################
+@Bot.command()
+async def duelo(ctx,usr2):
+  usr1 = ctx.author
+  stop = False
+  punt_usr1 = 0
+  punt_usr2 = 0
+  for i in range(5):
+    if stop == False:
+      stop, elapsed, correcto, usuario = await entrenar(ctx,modo = 'aleatorio',usr2)
+      
+      if usuario == usr1:
+        punt_usr1 += 1
+      elif usuario == usr2:
+        punt_usr2 += 1
+
+    else:
+      await ctx.reply("Duelo interrumpido por {}.".format(ctx.author.name))
+      return
+  if punt_usr1 > punt_usr2:
+    ganador = usr1.name
+  elif: punt_usr1 < punt_usr2:
+    ganador = usr2.name
+  else:
+    ganador = "Empate."
+puntuaciones = """Resultados:
+                  {}: {} puntos.
+                  {}: {} puntos.
+                  El ganador del duelo es...
+                  ***{}***
+                  """.format(usr1.name,punt_usr1,usr2.name,punt_usr2,ganador)
+  await ctx.reply(puntuaciones)
+
+
+  #Es un modo que tiene como entrada dos usuarios, igual que los que están en /dar de Montse
+  #En principio va a ser un duelo al mejor de 5 intervalos, quiero que marque por cuántos va. 
+  #En el duelo, se llama a !entrenar pero se autoriza a dos usuarios para la interacción.
+  #Se debe acumular el número de aciertos y al final, el que más tenga, gana.
+
 
 #################### MODOS #########################
 @Bot.command()
