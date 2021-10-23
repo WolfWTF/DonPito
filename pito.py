@@ -507,7 +507,7 @@ async def duelo(ctx,usr2):
       return
   if punt_usr1 > punt_usr2:
     ganador = usr1.name
-  elif: punt_usr1 < punt_usr2:
+  elif punt_usr1 < punt_usr2:
     ganador = usr2.name
   else:
     ganador = "Empate."
