@@ -511,7 +511,7 @@ async def duelo(ctx,usr2):
     ganador = usr2.name
   else:
     ganador = "Empate."
-puntuaciones = """Resultados:
+  puntuaciones = """Resultados:
                   {}: {} puntos.
                   {}: {} puntos.
                   El ganador del duelo es...
