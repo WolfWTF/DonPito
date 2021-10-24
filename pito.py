@@ -495,8 +495,8 @@ async def duelo(ctx,usr2):
   punt_usr1 = 0
   punt_usr2 = 0
   for i in range(5):
-    if not stop:
-      stop, elapsed, correcto, usuario = await entrenar(ctx,'aleatorio',range(0,13),usr2)
+    if continuar:
+      continuar, elapsed, correcto, usuario = await entrenar(ctx,'aleatorio',range(0,13),usr2)
       print(stop)
       if usuario == usr1:
         punt_usr1 += 1
