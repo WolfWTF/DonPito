@@ -412,7 +412,6 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13),usr2=None):
     with ctx.channel.typing():
       await ctx.send("Preparando entrenamiento...",delete_after = 5)
       semitones = random.choice(inter)
-      print(semitones)
       get_audio(modo,semitones)
       #### SE ENVIA EL AUDIO
       audio = await ctx.send(file=discord.File(r'DonPito/test.mp3'))
@@ -503,7 +502,7 @@ async def duelo(ctx,usr2):
         punt_usr2 += 1
 
     else:
-      await ctx.reply("Duelo interrumpido por {}.".format(ctx.author.name))
+      await ctx.reply("Duelo interrumpido por {}.".format(ctx.author.name), delete_after = 5)
       return
   if punt_usr1 > punt_usr2:
     ganador = usr1.name
@@ -512,7 +511,7 @@ async def duelo(ctx,usr2):
   else:
     ganador = "Empate."
   print(type(usr1))
-  print(type(usr2))
+  print(usr2)
 
   puntuaciones = """Resultados:
                   {}: {} puntos.
