@@ -510,7 +510,7 @@ async def duelo(ctx,usr2):
     ganador = usr2.name
   else:
     ganador = "Empate."
-  print(type(usr1))
+  print(usr1)
   print(usr2)
 
   puntuaciones = """Resultados:
