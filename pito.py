@@ -510,15 +510,13 @@ async def duelo(ctx,usr2: discord.member.Member):
     ganador = usr2.name
   else:
     ganador = "Empate."
-  print(usr1)
-  print(usr2)
 
   puntuaciones = """Resultados:
-                  {}: {} puntos.
-                  {}: {} puntos.
-                  El ganador del duelo es...
-                  ***{}***
-                  """.format(usr1,punt_usr1,usr2,punt_usr2,ganador)
+    {}: {} puntos.
+    {}: {} puntos.
+    El ganador del duelo es...
+    ***{}***
+    """.format(usr1,punt_usr1,usr2,punt_usr2,ganador)
   await ctx.reply(puntuaciones)
 
 
