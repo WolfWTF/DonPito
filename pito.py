@@ -491,7 +491,7 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13),usr2=None):
 @Bot.command()
 async def duelo(ctx,usr2):
   usr1 = ctx.author
-  stop = False
+  continuar = True
   punt_usr1 = 0
   punt_usr2 = 0
   for i in range(5):
