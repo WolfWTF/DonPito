@@ -494,7 +494,7 @@ async def duelo(ctx,usr2):
   continuar = True
   punt_usr1 = 0
   punt_usr2 = 0
-  for i in range(5):
+  for i in range(2):
     if continuar:
       continuar, elapsed, correcto, usuario = await entrenar(ctx,'aleatorio',range(0,13),usr2)
       if usuario == usr1:
@@ -511,12 +511,15 @@ async def duelo(ctx,usr2):
     ganador = usr2.name
   else:
     ganador = "Empate."
+  print(type(usr1))
+  print(type(usr2))
+
   puntuaciones = """Resultados:
                   {}: {} puntos.
                   {}: {} puntos.
                   El ganador del duelo es...
                   ***{}***
-                  """.format(usr1.name,punt_usr1,usr2.name,punt_usr2,ganador)
+                  """.format(usr1,punt_usr1,usr2,punt_usr2,ganador)
   await ctx.reply(puntuaciones)
 
 
