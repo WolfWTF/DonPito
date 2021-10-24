@@ -488,7 +488,7 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13),usr2=None):
 
 #################### DUELO #####################
 @Bot.command()
-async def duelo(ctx,usr2):
+async def duelo(ctx,usr2: discord.member.Member):
   usr1 = ctx.author
   continuar = True
   punt_usr1 = 0
