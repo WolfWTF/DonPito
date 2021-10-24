@@ -412,6 +412,7 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13),usr2=None):
     with ctx.channel.typing():
       await ctx.send("Preparando entrenamiento...",delete_after = 5)
       semitones = random.choice(inter)
+      print(semitones)
       get_audio(modo,semitones)
       #### SE ENVIA EL AUDIO
       audio = await ctx.send(file=discord.File(r'DonPito/test.mp3'))
@@ -495,7 +496,7 @@ async def duelo(ctx,usr2):
   punt_usr2 = 0
   for i in range(5):
     if stop == False:
-      stop, elapsed, correcto, usuario = await entrenar(ctx,'aleatorio',usr2)
+      stop, elapsed, correcto, usuario = await entrenar(ctx,'aleatorio',range(0,13),usr2)
       
       if usuario == usr1:
         punt_usr1 += 1
