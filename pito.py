@@ -247,7 +247,7 @@ async def aventura(ctx):
     aciertos = 0
     media = 0
     for i in range(1,11):
-      continuar, elapsed, correcto = await entrenar(ctx,modo,interv)
+      continuar, elapsed, correcto, usuario = await entrenar(ctx,modo,interv)
       if not continuar:
         return
       tiempo = tdf(elapsed)
