@@ -280,11 +280,13 @@ async def aventura(ctx):
 
   elif selec_usuario == "Repetir nivel":
     #habrá que seleccionar el nivel, digo yo
-    query = await ctx.reply("Introduce el número de nivel que quieres repetir.")
+    query = await ctx.reply("Introduce el número de nivel que quieres repetir.") #hay que deletear luego
     selec_usuario = (await Bot.wait_for("message", check=check)).content.lower()
-    if selec_usuario < nivel :
-      bucle = True
-      
+    num = esunnumero(selec_usuario)
+    if not num:
+      resultados = ":x: Error. Selecciona nivel con su número. "
+      await ctx.send(resultados)
+    if int(selec_usuario) < int(nivel):
       aciertos = await func_nivel(nivel,usr_name)
 
       if aciertos == 10:
