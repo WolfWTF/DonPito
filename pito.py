@@ -234,7 +234,7 @@ async def aventura(ctx):
 
   def func_nivel(nivel,usr_name):
     niveles = aj.abrir_json("DonPito/niveles.json")
-    await ctx.reply("Comenzando aventura. Usuario: {}.\nNivel {}: {}".format(usr_name,nivel,niveles[str(nivel)]['nombre']).encode("latin-1").decode("utf-8"))
+    
     interv = niveles[str(nivel)]['intervalos']
     modo = niveles[str(nivel)]['modo']
     aciertos = 0
@@ -263,6 +263,7 @@ async def aventura(ctx):
 
   elif selec_usuario == "Sí":
     niv_disp = range(1,nivel)
+    await ctx.reply("Comenzando aventura. Usuario: {}.\nNivel {}: {}".format(usr_name,nivel,niveles[str(nivel)]['nombre']).encode("latin-1").decode("utf-8"))
     aciertos = func_nivel(nivel,usr_name)
 
     #ACTUALIZAMOS PADAWANS
