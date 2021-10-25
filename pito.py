@@ -241,7 +241,7 @@ async def aventura(ctx):
   elif selec_usuario == "Sí":
     niveles = aj.abrir_json("DonPito/niveles.json")
     usr_name = padawans[usr_id]['name']
-    await ctx.reply("Comenzando aventura. Usuario: {}.\nNivel {}: {}".format(usr_name,nivel,niveles[str(nivel)]['nombre']).encode("utf-8").decode("latin-1"))
+    await ctx.reply("Comenzando aventura. Usuario: {}.\nNivel {}: {}".format(usr_name,nivel,niveles[str(nivel)]['nombre']).encode("latin-1").decode("utf-8"))
     interv = niveles[str(nivel)]['intervalos']
     modo = niveles[str(nivel)]['modo']
     aciertos = 0
