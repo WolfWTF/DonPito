@@ -208,7 +208,7 @@ async def niveles(ctx):
   i=1
   respuesta = u"**NIVELES:** \n"
   for nivel in niveles:
-    nivel_string = u"{}. {}\n".format(i,niveles[nivel]["nombre"]).encode("latin-1").decode("utf-8")
+    nivel_string = u"{}. {}\n".format(i,niveles[nivel]["nombre"]).encode("utf-8").decode("latin-1")
     respuesta += nivel_string
     i+=1
   await ctx.reply(respuesta)
@@ -241,7 +241,7 @@ async def aventura(ctx):
   elif selec_usuario == "Sí":
     niveles = aj.abrir_json("DonPito/niveles.json")
     usr_name = padawans[usr_id]['name']
-    await ctx.reply("Comenzando aventura. Usuario: {}.\nNivel {}: {}".format(usr_name,nivel,niveles[str(nivel)]['nombre']).encode("latin-1").decode("utf-8"))
+    await ctx.reply("Comenzando aventura. Usuario: {}.\nNivel {}: {}".format(usr_name,nivel,niveles[str(nivel)]['nombre']).encode("utf-8").decode("latin-1"))
     interv = niveles[str(nivel)]['intervalos']
     modo = niveles[str(nivel)]['modo']
     aciertos = 0
@@ -434,8 +434,8 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13),usr2=None):
       for i in inter:
         ar1.append(Botones_Intervalos[i])
       componentes = [ar1,[stop_button]]
-    elif (len(inter) <= 10):
       
+    elif (len(inter) <= 10):
       ar2 = []
       for i in inter():
         if a <= 5:
