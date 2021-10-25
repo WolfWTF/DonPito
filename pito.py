@@ -65,7 +65,7 @@ def inscribir(ctx):
   padawans = aj.abrir_json("DonPito/padawans.json")
   usr_id = str(ctx.author.id)
   usr_name = ctx.author.name
-  padawans[usr_id] = {"name": usr_name, "exp": 0, "nivel_intervalos": 0}
+  padawans[usr_id] = {"name": usr_name, "exp": 0, "nivel_intervalos": 1}
   aj.actualizar_padawans(padawans)
   return padawans
 
@@ -498,6 +498,7 @@ async def duelo(ctx,usr2: discord.member.Member):
   punt_usr2 = 0
   for i in range(5):
     if continuar:
+
       continuar, elapsed, correcto, usuario = await entrenar(ctx,'aleatorio',range(0,13),usr2)
       if usuario == usr1 and correcto:
         punt_usr1 += 1
