@@ -232,7 +232,7 @@ async def aventura(ctx):
   mensaje = "Nivel {} ¿Continuar avenutra interválica?".format(nivel)
   Botones = await ctx.send(mensaje, components = [ActionRowSiNo])
 
-  def func_nivel(nivel,usr_name):
+  async def func_nivel(nivel,usr_name):
     niveles = aj.abrir_json("DonPito/niveles.json")
     
     interv = niveles[str(nivel)]['intervalos']
@@ -285,7 +285,7 @@ async def aventura(ctx):
     if selec_usuario < nivel :
       bucle = True
       
-      aciertos = func_nivel(nivel,usr_name)
+      aciertos = await func_nivel(nivel,usr_name)
 
       if aciertos == 10:
         resultados = ":muscle_tone2: 10/10 ¡Te has marcado un perfect!"
