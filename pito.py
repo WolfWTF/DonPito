@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #IMPORTS
 from ffprobe import FFProbe
 import os
