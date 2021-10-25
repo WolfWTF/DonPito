@@ -502,7 +502,7 @@ async def duelo(ctx,usr2: discord.member.Member):
         punt_usr2 += 1
 
     else:
-      await ctx.reply("Duelo interrumpido por {}.".format(ctx.author.name), delete_after = 5)
+      await ctx.reply("Duelo interrumpido por {}.".format(usuario), delete_after = 5)
       return
   if punt_usr1 > punt_usr2:
     ganador = usr1.name
