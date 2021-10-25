@@ -262,7 +262,6 @@ async def aventura(ctx):
     #await ctx.reply("Saliendo...", delete_after = 5)
 
   elif selec_usuario == "Sí":
-    niv_disp = range(1,nivel)
     await ctx.reply("Comenzando aventura. Usuario: {}.\nNivel {}: {}".format(usr_name,nivel,niveles[str(nivel)]['nombre']).encode("latin-1").decode("utf-8"))
     aciertos = func_nivel(nivel,usr_name)
 
@@ -287,7 +286,7 @@ async def aventura(ctx):
       resultados = ":x: Error. Selecciona nivel con su número. "
       await ctx.send(resultados)
     if int(selec_usuario) < int(nivel):
-      aciertos = await func_nivel(nivel,usr_name)
+      aciertos = await func_nivel(selec_usuario,usr_name)
 
       if aciertos == 10:
         resultados = ":muscle_tone2: 10/10 ¡Te has marcado un perfect!"
