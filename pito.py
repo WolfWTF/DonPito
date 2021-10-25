@@ -218,8 +218,8 @@ async def niveles(ctx):
 @Bot.command()
 async def aventura(ctx):
   usr_id = str(ctx.author.id)
-  usr_name = padawans[usr_id]['name']
   padawans = aj.abrir_json("DonPito/padawans.json")
+  usr_name = padawans[usr_id]['name']
   #try:
   if usr_id in padawans:
     nivel = padawans[usr_id]['nivel_intervalos']
