@@ -33,7 +33,7 @@ hora_antigua = datetime.now()
 async def on_ready():
   print('Sesión iniciada como {0.user}'.format(Bot))
   channel = Bot.get_channel(840366998315991061) #Parche
-  await channel.send("¡Don Pito reconectado!")
+  #await channel.send("¡Don Pito reconectado!")
 
 intervalos = ["Unísono", "2ª menor", "2ª Mayor","3ª menor", "3ª Mayor",
               "4ª", "Tritono", "5ª", "6ª menor", "6ª mayor","7ª menor",
@@ -94,8 +94,11 @@ def esunnumero(mensaje):
 def dar_exp(ctx,puntos):
   padawans = aj.abrir_json("DonPito/padawans.json")
   usr_id = str(ctx.author.id)
+  if not(usr_id in padawans):
+    padawans = inscribir(ctx)
   exp = padawans[usr_id]['exp']
   exp += puntos
+
   padawans[usr_id]['exp'] = exp
   aj.actualizar_padawans(padawans)
   return exp
