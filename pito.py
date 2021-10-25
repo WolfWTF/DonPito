@@ -493,7 +493,7 @@ async def duelo(ctx,usr2: discord.member.Member):
   continuar = True
   punt_usr1 = 0
   punt_usr2 = 0
-  for i in range(2):
+  for i in range(5):
     if continuar:
       continuar, elapsed, correcto, usuario = await entrenar(ctx,'aleatorio',range(0,13),usr2)
       if usuario == usr1 and correcto:
