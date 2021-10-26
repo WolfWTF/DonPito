@@ -79,7 +79,7 @@ def corregir(ctx,usuario,selec_usuario,respuesta_correcta,elapsed):
     experiencia = dar_exp(ctx,1)# por qué a Alex no le ha dado la experiencia?
     respuesta = ":white_check_mark:  **{}**  :white_check_mark:  ¡Muy bien, {}!Tiempo: {} s.\n +1 punto de exp. Puntos totales: {}".format(selec_usuario,usuario.name,str(segundos_totales),experiencia)
   else:
-    respuesta =":x:  **{}**  :x:  Respuesta correcta: **{}**.".format(selec_usuario, respuesta_correcta)
+    respuesta =":x:  {}:  **{}**  :x:  Respuesta correcta: **{}**.".format(usuario.name, selec_usuario, respuesta_correcta)
   return respuesta, correcto
 
 piano = True
