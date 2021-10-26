@@ -1,0 +1,28 @@
+-Incluir nombre si fallas en la función entrenar
+
+-modos: diseño de niveles
+	los del mayor [hecho en ascendente]
+	menor melódica
+	menor armónica [nombres?]
+	ascendente, descendente, en arpegio ascendete y en arpegio descendente
+	
+-duelos [HECHO]
+	Mejoras:
+	-implementar mensaje de confirmación de adversario y duelos abiertos 
+
+-identificación de acordes:
+	1. triadas: mayor,menor,dim,aug,sus2,sus4,lidia,frigia
+	2. con inversiones (fundamental, primera inv., segunda inversión) Maj min y dim
+		
+	3. Tertradas: dim,semi,m7,mM,Dom,Maj7,augMaj7
+	4. con inversiones (fundamental, primera inv., segunda inversión y tercera inv) semi, Maj7, Dom, mM
+
+	5. psicoacústica:
+		Maj7: 9, 11, 13, #11 (Marcianadas: b9, #9, b13)
+		m7: 9, b9, (Marcianadas b11)
+		naturales: 9, 11, 13
+		alteradas: b9, #9, #11, b13
+
+-cadencias: de 2 y de 3
+-identificación de progresiones (con trozos de temas nuestros)
+-recursos usados
