@@ -33,7 +33,7 @@ hora_antigua = datetime.now()
 async def on_ready():
   print('Sesión iniciada como {0.user}'.format(Bot))
   channel = Bot.get_channel(840366998315991061) #Parche
-  await channel.send("¡Don Pito reconectado!")
+  #await channel.send("¡Don Pito reconectado!")
 
 intervalos = ["Unísono", "2ª menor", "2ª Mayor","3ª menor", "3ª Mayor",
               "4ª", "Tritono", "5ª", "6ª menor", "6ª mayor","7ª menor",
@@ -65,7 +65,7 @@ def inscribir(ctx):
   padawans = aj.abrir_json("DonPito/padawans.json")
   usr_id = str(ctx.author.id)
   usr_name = ctx.author.name
-  padawans[usr_id] = {"name": usr_name, "exp": 0, "nivel_intervalos": 0}
+  padawans[usr_id] = {"name": usr_name, "exp": 0, "nivel_intervalos": 1}
   aj.actualizar_padawans(padawans)
   return padawans
 
@@ -79,7 +79,7 @@ def corregir(ctx,usuario,selec_usuario,respuesta_correcta,elapsed):
     experiencia = dar_exp(ctx,1)# por qué a Alex no le ha dado la experiencia?
     respuesta = ":white_check_mark:  **{}**  :white_check_mark:  ¡Muy bien, {}!Tiempo: {} s.\n +1 punto de exp. Puntos totales: {}".format(selec_usuario,usuario.name,str(segundos_totales),experiencia)
   else:
-    respuesta =":x: {}:  **{}**  :x:  Respuesta correcta: **{}**.".format(usuario.name, selec_usuario, respuesta_correcta)
+    respuesta =":x:  **{}**  :x:  Respuesta correcta: **{}**.".format(selec_usuario, respuesta_correcta)
   return respuesta, correcto
 
 piano = True
@@ -94,8 +94,11 @@ def esunnumero(mensaje):
 def dar_exp(ctx,puntos):
   padawans = aj.abrir_json("DonPito/padawans.json")
   usr_id = str(ctx.author.id)
+  if not(usr_id in padawans):
+    padawans = inscribir(ctx)
   exp = padawans[usr_id]['exp']
   exp += puntos
+
   padawans[usr_id]['exp'] = exp
   aj.actualizar_padawans(padawans)
   return exp
@@ -216,6 +219,7 @@ async def niveles(ctx):
 async def aventura(ctx):
   usr_id = str(ctx.author.id)
   padawans = aj.abrir_json("DonPito/padawans.json")
+  usr_name = padawans[usr_id]['name']
   #try:
   if usr_id in padawans:
     nivel = padawans[usr_id]['nivel_intervalos']
@@ -224,27 +228,19 @@ async def aventura(ctx):
     padawans[usr_id]['nivel_intervalos'] = 1
     aj.actualizar_padawans(padawans)
     nivel = padawans[usr_id]['nivel_intervalos']
-  ActionRowSiNo = [Button(label = "Sí",style = 3), Button(label = "No" ,style = 4)]
-  mensaje = "¿Quieres continuar la avenutra interválica?"
+  ActionRowSiNo = [Button(label = "Sí",style = 3), Button(label = "No" ,style = 4), Button(label = "Repetir nivel" ,style = 3)]
+  mensaje = "Nivel {} ¿Continuar avenutra interválica?".format(nivel)
   Botones = await ctx.send(mensaje, components = [ActionRowSiNo])
 
-  def check(interaction):
-    return interaction.author == ctx.author
-  interaction = await Bot.wait_for("button_click",check=check)
-  await Botones.delete()
-  selec_usuario = interaction.component.label
-  if selec_usuario == "No":
-    await ctx.reply("Saliendo...", delete_after = 5)
-  elif selec_usuario == "Sí":
+  async def func_nivel(nivel,usr_name):
     niveles = aj.abrir_json("DonPito/niveles.json")
-    usr_name = padawans[usr_id]['name']
-    await ctx.reply("Comenzando aventura. Usuario: {}.\nNivel {}: {}".format(usr_name,nivel,niveles[str(nivel)]['nombre']).encode("latin-1").decode("utf-8"))
+    
     interv = niveles[str(nivel)]['intervalos']
     modo = niveles[str(nivel)]['modo']
     aciertos = 0
     media = 0
     for i in range(1,11):
-      continuar, elapsed, correcto = await entrenar(ctx,modo,interv)
+      continuar, elapsed, correcto, usuario = await entrenar(ctx,modo,interv)
       if not continuar:
         return
       tiempo = tdf(elapsed)
@@ -252,9 +248,25 @@ async def aventura(ctx):
       media += media*(i-1) + segundos_totales/i 
       if correcto:
         aciertos += 1
+    return aciertos
+
+  def check(interaction):
+    return interaction.author == ctx.author
+
+
+  interaction = await Bot.wait_for("button_click",check=check)
+  await Botones.delete()
+  selec_usuario = interaction.component.label
+  if selec_usuario == "No":
+    pass
+    #await ctx.reply("Saliendo...", delete_after = 5)
+
+  elif selec_usuario == "Sí":
+    await ctx.reply("Comenzando aventura. Usuario: {}.\nNivel {}: {}".format(usr_name,nivel,niveles[str(nivel)]['nombre']).encode("latin-1").decode("utf-8"))
+    aciertos = func_nivel(nivel,usr_name)
 
     #ACTUALIZAMOS PADAWANS
-    padawans = aj.abrir_json("DonPito/padawans.json")
+    #padawans = aj.abrir_json("DonPito/padawans.json")
     resultados = "Aciertos: {}/10. ".format(aciertos)
     if aciertos >= 7:
       resultados += ":white_check_mark: Has superado la prueba, pasas al nivel {}.".format(nivel+1)
@@ -264,6 +276,29 @@ async def aventura(ctx):
       resultados += ":x: No has superado la prueba. Inténtalo de nuevo."
     respuesta = discord.Embed(title = "Resultados:", description = resultados)
     await ctx.send(embed=respuesta)
+
+  elif selec_usuario == "Repetir nivel":
+    #habrá que seleccionar el nivel, digo yo
+    query = await ctx.reply("Introduce el número de nivel que quieres repetir.") #hay que deletear luego
+    selec_usuario = (await Bot.wait_for("message", check=check)).content.lower()
+    num = esunnumero(selec_usuario)
+    if not num:
+      resultados = ":x: Error. Selecciona nivel con su número. "
+      await ctx.send(resultados)
+    if int(selec_usuario) < int(nivel):
+      aciertos = await func_nivel(selec_usuario,usr_name)
+
+      if aciertos == 10:
+        resultados = ":muscle_tone2: 10/10 ¡Te has marcado un perfect!"
+        await ctx.send(resultados)
+      else:
+        resultados = ":woozy_face: {}/10 Aún no te sale perfecto. ".format(aciertos)
+        await ctx.send(resultados)
+    else:
+      resultados = "Sólo puedes repetir niveles que ya hayas superado."
+      await ctx.send(resultados)
+
+
 
 ####################### PITO ##########################################################################
 
@@ -431,8 +466,8 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13),usr2=None):
       for i in inter:
         ar1.append(Botones_Intervalos[i])
       componentes = [ar1,[stop_button]]
-    elif (len(inter) <= 10):
       
+    elif (len(inter) <= 10):
       ar2 = []
       for i in inter():
         if a <= 5:
@@ -488,35 +523,36 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13),usr2=None):
 
 #################### DUELO #####################
 @Bot.command()
-async def duelo(ctx,usr2):
+async def duelo(ctx,usr2: discord.member.Member):
   usr1 = ctx.author
-  stop = False
+  continuar = True
   punt_usr1 = 0
   punt_usr2 = 0
   for i in range(5):
-    if stop == False:
-      stop, elapsed, correcto, usuario = await entrenar(ctx,modo = 'aleatorio',usr2)
-      
-      if usuario == usr1:
+    if continuar:
+
+      continuar, elapsed, correcto, usuario = await entrenar(ctx,'aleatorio',range(0,13),usr2)
+      if usuario == usr1 and correcto:
         punt_usr1 += 1
-      elif usuario == usr2:
+      elif usuario == usr2 and correcto:
         punt_usr2 += 1
 
     else:
-      await ctx.reply("Duelo interrumpido por {}.".format(ctx.author.name))
+      await ctx.reply("Duelo interrumpido por {}.".format(usuario), delete_after = 5)
       return
   if punt_usr1 > punt_usr2:
     ganador = usr1.name
-  elif: punt_usr1 < punt_usr2:
+  elif punt_usr1 < punt_usr2:
     ganador = usr2.name
   else:
     ganador = "Empate."
-puntuaciones = """Resultados:
-                {}: {} puntos.
-                {}: {} puntos.
-                El ganador del duelo es...
-                ***{}***
-                """.format(usr1.name,punt_usr1,usr2.name,punt_usr2,ganador)
+
+  puntuaciones = """Resultados:
+    {}: {} puntos.
+    {}: {} puntos.
+    El ganador del duelo es...
+    ***{}***
+    """.format(usr1,punt_usr1,usr2,punt_usr2,ganador)
   await ctx.reply(puntuaciones)
 
 
