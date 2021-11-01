@@ -566,14 +566,33 @@ async def duelo(ctx,usr2: discord.member.Member):
 #################### MODOS #########################
 @Bot.command()
 async def modos(ctx):
-  lista = aj.abrir_json("DonPito/modos.json")
+  #LA LISTA ESTÁ AQUÍ PARA QUE NO HAYA PROBLEMAS CON LOS ACENTOS (ELIMINAR "niveles.json")
+  lista = {
+    "mayor": {
+      "Jónico": [0,2,4,5,7,9,11,12],
+      "Dórico":[0,2,3,5,7,9,10,12],
+      "Frigio":[0,1,3,5,7,8,10,12],
+      "Lidio":[0,2,4,6,7,9,11,12],
+      "Mixolidio":[0,2,4,5,7,9,10,12],
+      "Eólico":[0,2,3,5,7,8,10,12],
+      "Locrio":[0,1,3,5,6,8,10,12]
+    },
+    "menor melódica" : {
+      "Menor melódico":[0,2,3,5,7,9,11,12],
+      "Dórico b2":[0,1,3,5,7,9,10,12],
+      "Lidio aumentado":[0,2,4,6,8,9,11,12],
+      "Lidio dominante":[0,2,4,6,7,9,10,12],
+      "Mixolidio b6":[0,2,4,5,7,8,10,12],
+      "Locrio n9":[0,2,3,5,6,8,10,12],
+      "Alterado":[0,1,3,4,6,8,10,12]
+    },
+    "menor armónica" : [0,2,3,5,7,8,11,12]
+  }
+  #lista = aj.abrir_json("DonPito/modos.json")
   mayor = lista["mayor"]
   modos_mayor = list(mayor.keys())
-  modos_mayor_acentos = []
-  for modo in modos_mayor:
-    modos_mayor_acentos.append(modo.encode("latin-1").decode("utf-8"))
   botoncitos = []
-  for modo in modos_mayor_acentos:
+  for modo in modos_mayor:
     new_boton = Button(label = modo, style = 1) #probamos encoding
     botoncitos.append(new_boton)
   stop_button = Button(label="Stop",style=4)
@@ -581,7 +600,7 @@ async def modos(ctx):
   row1 = botoncitos[0:4]
   row2 = botoncitos[4:]
 
-  respuesta_correcta = random.choice(modos_mayor_acentos)
+  respuesta_correcta = random.choice(modos_mayor)
   escala = lista["mayor"][respuesta_correcta]
   await ctx.send("Preparando entrenamiento...",delete_after=5)
   get_escala(escala)
