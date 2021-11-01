@@ -567,7 +567,7 @@ async def duelo(ctx,usr2: discord.member.Member):
 async def modos(ctx):
   lista = aj.abrir_json("DonPito/modos.json")
   mayor = lista["mayor"]
-  modos_mayor = list(mayor.keys()).encode("latin-1").decode("utf-8")
+  modos_mayor = list(mayor.keys()).decode("utf-8")
 
   botoncitos = []
   for modo in modos_mayor:
