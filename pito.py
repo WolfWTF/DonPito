@@ -567,7 +567,7 @@ async def duelo(ctx,usr2: discord.member.Member):
 async def modos(ctx):
   lista = aj.abrir_json("DonPito/modos.json")
   mayor = lista["mayor"]
-  modos_mayor = list(mayor.keys()).decode("utf-8")
+  modos_mayor = list(mayor.keys())
 
   botoncitos = []
   for modo in modos_mayor:
@@ -575,8 +575,8 @@ async def modos(ctx):
     botoncitos.append(new_boton)
   stop_button = Button(label="Stop",style=4)
   botoncitos.append(stop_button)
-  row1 = botoncitos[0:3]
-  row2 = botoncitos[3:]
+  row1 = botoncitos[0:4]
+  row2 = botoncitos[4:]
 
   respuesta_correcta = random.choice(modos_mayor)
   escala = lista["mayor"][respuesta_correcta]
