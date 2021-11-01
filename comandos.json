@@ -1,4 +1,4 @@
 {
   "entrenamiento": "aventura,continuo,entrenar,modos,pito,duelo @adversario",
-  "config.": "exp,piano,tono,niveles,comandos"
+  "config": "exp,piano,tono,niveles,comandos"
 }
