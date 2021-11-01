@@ -573,10 +573,10 @@ async def modos(ctx):
   for modo in modos_mayor:
     new_boton = Button(label = modo.encode("latin-1").decode("utf-8"), style = 1) #probamos encoding
     botoncitos.append(new_boton)
-
   stop_button = Button(label="Stop",style=4)
+  botoncitos.append(stop_button)
   row1 = botoncitos[0:3]
-  row2 = botoncitos[3:].append(stop_button)
+  row2 = botoncitos[3:]
 
   respuesta_correcta = random.choice(modos_mayor)
   escala = lista["mayor"][respuesta_correcta]
