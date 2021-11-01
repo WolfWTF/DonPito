@@ -61,7 +61,7 @@ def get_comandos():
     str_config = str_entrenamiento.replace(",","`\n`!")
     str_config = "`!" + str_entrenamiento + "`"
 
-    return string_entrenamiento, string_config
+    return str_entrenamiento, str_config
 
 def inscribir(ctx):
   padawans = aj.abrir_json("DonPito/padawans.json")
