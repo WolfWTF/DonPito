@@ -373,11 +373,13 @@ async def exp(ctx):
   usr_name = ctx.author.name
   padawans = aj.abrir_json("DonPito/padawans.json")
   if usr_id in padawans:
-    exp= padawans[usr_id]['exp']
+    exp = padawans[usr_id]['exp']
+    nivel = padawans[usr_id]['nivel_intervalos']
   else:
     padawans = inscribir(ctx)
     exp = padawans[usr_id]['exp']
-  respuesta = "El padawan **{}** tiene **{}** puntos de exp :chart_with_upwards_trend:.".format(usr_name, exp)
+    nivel = padawans[usr_id]['nivel_intervalos']
+  respuesta = "El padawan **{}** tiene **{}** puntos de exp :chart_with_upwards_trend:.\nNivel en reconocimiento interválico: **{}** :abacus:.".format(usr_name, exp,nivel)
   await ctx.reply(respuesta)
       
 ##################### CONTINUO ################################################################################################
