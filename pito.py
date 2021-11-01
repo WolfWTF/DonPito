@@ -568,9 +568,11 @@ async def modos(ctx):
   lista = aj.abrir_json("DonPito/modos.json")
   mayor = lista["mayor"]
   modos_mayor = list(mayor.keys())
-
-  botoncitos = []
+  modos_mayor_acentos = []
   for modo in modos_mayor:
+    modos_mayor_acentos.append(modo.encode("latin-1").decode("utf-8"))
+  botoncitos = []
+  for modo in modos_mayor_acentos:
     new_boton = Button(label = modo, style = 1) #probamos encoding
     botoncitos.append(new_boton)
   stop_button = Button(label="Stop",style=4)
