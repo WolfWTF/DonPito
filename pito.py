@@ -57,9 +57,11 @@ def get_comandos():
     str_entrenamiento = comandos["entrenamiento"]
     str_entrenamiento = str_entrenamiento.replace(",","`\n`!")
     str_entrenamiento = "`!" + str_entrenamiento + "`"
-    string_completa = str_entrenamiento
+    str_config = comandos["config"]
+    str_config = str_entrenamiento.replace(",","`\n`!")
+    str_config = "`!" + str_entrenamiento + "`"
 
-    return string_completa
+    return string_entrenamiento, string_config
 
 def inscribir(ctx):
   padawans = aj.abrir_json("DonPito/padawans.json")
@@ -180,8 +182,9 @@ def get_audio(modo,semitones):
 @Bot.command()
 async def comandos(ctx):
   respuesta = discord.Embed(title="__**COMANDOS**__" , color= 0x2a59a1)
-  comandos = get_comandos()
+  comandos,config = get_comandos()
   respuesta.add_field(name="Entrenamiento:", value = comandos)
+  respuesta.add_field(name="Configuración:", value = config)
   await ctx.reply(embed=respuesta)
 
 ####################### UPTIME ########################################################################
