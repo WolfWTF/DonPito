@@ -1,10 +1,17 @@
 {
     "157508020375388160": {
         "name": "DaniCassani",
-        "exp": 1
+        "exp": 90,
+        "nivel_intervalos": 5
     },
     "690647717457821767": {
         "name": "Alexander Alex",
-        "exp": 0
+        "exp": 14,
+        "nivel_intervalos": 4
+    },
+    "394212515237724168": {
+        "name": "Carmen2",
+        "exp": 31,
+        "nivel_intervalos": 5
     }
 }
