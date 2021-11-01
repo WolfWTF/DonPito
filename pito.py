@@ -580,7 +580,7 @@ async def modos(ctx):
   row1 = botoncitos[0:4]
   row2 = botoncitos[4:]
 
-  respuesta_correcta = random.choice(modos_mayor)
+  respuesta_correcta = random.choice(modos_mayor_acentos)
   escala = lista["mayor"][respuesta_correcta]
   await ctx.send("Preparando entrenamiento...",delete_after=5)
   get_escala(escala)
