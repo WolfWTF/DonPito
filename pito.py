@@ -59,7 +59,7 @@ def get_comandos():
     str_entrenamiento = "`!" + str_entrenamiento + "`"
     str_config = comandos["config"]
     str_config = str_config.replace(",","`\n`!")
-    str_config = "`!" + str_entrenamiento + "`"
+    str_config = "`!" + str_config + "`"
 
     return str_entrenamiento, str_config
 
