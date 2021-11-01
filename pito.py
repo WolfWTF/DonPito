@@ -571,10 +571,12 @@ async def modos(ctx):
 
   botoncitos = []
   for modo in modos_mayor:
-    new_boton = Button(label = modo, style = 1)
+    new_boton = Button(label = modo.encode("latin-1").decode("utf-8"), style = 1) #probamos encoding
     botoncitos.append(new_boton)
+
+  stop_button = Button(label="Stop",style=4)
   row1 = botoncitos[0:3]
-  row2 = botoncitos[3:]
+  row2 = [botoncitos[3:],stop_button]
 
   respuesta_correcta = random.choice(modos_mayor)
   escala = lista["mayor"][respuesta_correcta]
@@ -591,7 +593,10 @@ async def modos(ctx):
   elapsed = end-start
   await Botones.delete()
   selec_usuario = interaction.component.label
-  if selec_usuario == respuesta_correcta:
+  if selec_usuario == "Stop":
+      respuesta = "Deteniendo..."
+      await ctx.send(respuesta, delete_after=5)
+  elif selec_usuario == respuesta_correcta:
     respuesta = ":white_check_mark: Correcto! {}.".format(respuesta_correcta)
     dar_exp(ctx,1)
   else:
