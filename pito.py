@@ -205,6 +205,7 @@ async def uptime(ctx):
 @Bot.command()
 async def niveles(ctx):
   niveles = aj.abrir_json("DonPito/niveles.json")
+  print(niveles)
   i=1
   respuesta = u"**NIVELES:** \n"
   for nivel in niveles:
