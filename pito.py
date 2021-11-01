@@ -565,13 +565,13 @@ async def duelo(ctx,usr2: discord.member.Member):
 #################### MODOS #########################
 @Bot.command()
 async def modos(ctx):
-  lista = aj.abrir_json("DonPito/modos.json")
+  lista = aj.abrir_json("DonPito/modos.json").encode("latin-1").decode("utf-8")
   mayor = lista["mayor"]
   modos_mayor = list(mayor.keys())
 
   botoncitos = []
   for modo in modos_mayor:
-    new_boton = Button(label = modo.encode("latin-1").decode("utf-8"), style = 1) #probamos encoding
+    new_boton = Button(label = modo, style = 1) #probamos encoding
     botoncitos.append(new_boton)
   stop_button = Button(label="Stop",style=4)
   botoncitos.append(stop_button)
