@@ -6,6 +6,7 @@ import discord
 from datetime import datetime
 import pydub
 import asyncio
+import discord_components#
 from discord_components import ComponentsBot, Button#, Select, SelectOption #DiscordComponents,  
 
 #Custom imports
