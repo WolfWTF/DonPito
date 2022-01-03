@@ -82,7 +82,7 @@ def corregir(ctx,usuario,selec_usuario,respuesta_correcta,elapsed):
     respuesta = ":white_check_mark:  **{}**  :white_check_mark:  ¡Muy bien, {}!Tiempo: {} s.\n +1 punto de exp. Puntos totales: {}".format(selec_usuario,usuario.name,str(segundos_totales),experiencia)
   else:
     respuesta =":x:  {}:  **{}**  :x:  Respuesta correcta: **{}**.".format(usuario.name, selec_usuario, respuesta_correcta)
-  return respuesta, correcto
+  return respuesta, elapsed, correcto
 
 piano = True
 
