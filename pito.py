@@ -26,7 +26,7 @@ start = datetime.now()
 
 channel_whitelist =[320694020328390666,840366998315991061]
 
-for filename in os.listdir('./cogs'):
+for filename in os.listdir('./DonPito/cogs'):
   if filename.endswith('.py'):
     Bot.load_extension(f'cogs.{filename[:-3]}')
 
