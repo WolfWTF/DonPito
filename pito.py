@@ -3,7 +3,7 @@ from ffprobe import FFProbe
 import os
 import random
 import discord
-#from discord.ext import commands
+from discord.ext import commands
 from datetime import datetime
 import pydub
 import asyncio
@@ -265,7 +265,7 @@ async def aventura(ctx):
     #await ctx.reply("Saliendo...", delete_after = 5)
 
   elif selec_usuario == "Sí":
-    await ctx.reply("Comenzando aventura. Usuario: {}.\nNivel {}: {}".format(usr_name,nivel,niveles[str(nivel)]['nombre']).encode("latin-1").decode("utf-8"))
+    await ctx.send("Comenzando aventura. Usuario: {}.\nNivel {}: {}".format(usr_name,nivel,niveles[str(nivel)]['nombre']).encode("latin-1").decode("utf-8"))
     aciertos = func_nivel(nivel,usr_name)
 
     #ACTUALIZAMOS PADAWANS
