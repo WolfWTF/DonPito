@@ -376,7 +376,7 @@ media = 0
 n = 0
 aciertos = 0
 fallos = 0
-@Bot.command(brief = "Entrenamiento interválico continuo.", description = "Este comando te permite hacer muchos test interválicos seguidos completamente aleatorios.")
+@Bot.command(category = "Entrenamiento", brief = "Entrenamiento interválico continuo.", description = "Este comando te permite hacer muchos test interválicos seguidos completamente aleatorios.")
 async def continuo(ctx,modo = 'aleatorio'):
   modos = ['ascendente','descendente','simultaneo']
   if modo == 'aleatorio':
