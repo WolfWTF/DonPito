@@ -234,10 +234,9 @@ async def aventura(ctx):
   ActionRowSiNo = [Button(label = "Sí",style = 3), Button(label = "No" ,style = 4), Button(label = "Repetir nivel" ,style = 3)]
   mensaje = "Nivel {} ¿Continuar avenutra interválica?".format(nivel)
   Botones = await ctx.send(mensaje, components = [ActionRowSiNo])
-
+  
+  levels = aj.abrir_json("DonPito/niveles.json")
   async def func_nivel(nivel,usr_name):
-    levels = aj.abrir_json("DonPito/niveles.json")
-    
     interv = levels[str(nivel)]['intervalos']
     modo = levels[str(nivel)]['modo']
     aciertos = 0
