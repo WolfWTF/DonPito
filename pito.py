@@ -217,7 +217,7 @@ async def uptime(ctx):
 
 ###################### NIVELES ########################################################################
 
-@Bot.command(brief = "NIVELES MODO AVENTURA INTERVÁLICA", help = "Muestra los niveles de entrenamiento interválico del modo Aventura.")
+@Bot.command(brief = "*Niveles del modo aventura.*", help = "Muestra los niveles de entrenamiento del modo Aventura Interválica.")
 async def niveles(ctx):
   niveles = aj.abrir_json("DonPito/niveles.json")
   print(niveles)
@@ -231,7 +231,7 @@ async def niveles(ctx):
 
 ###################### AVENTURA #######################################################################
 
-@Bot.command()
+@Bot.command(brief = "*Aventura Interválica.*", description = "Este comando lanza tu aventura interválica. Te permitirá continuarla donde la dejaste o repetir algún nivel que ya hayas superado. En estos niveles deberás distinguir los distintos intervalos de forma ascendente, descentende y simultanea.")
 async def aventura(ctx):
   usr_id = str(ctx.author.id)
   padawans = aj.abrir_json("DonPito/padawans.json")
@@ -318,7 +318,7 @@ async def aventura(ctx):
 
 ####################### PITO ##########################################################################
 
-@Bot.command()
+@Bot.command(brief = "*Entrenamiento frecuencial.*", description = "Este comendo te permitirá poner a prueba tu oído haciéndote oír un tono puro y pidiéndote que adivines aproximadamente su frecuencia.")
 async def pito(ctx):
   sonido = []
   await ctx.send("Preparando pito... :smirk:",delete_after = 7)
@@ -367,7 +367,7 @@ async def pito(ctx):
 
 #####################SONIDO#############################################################################################
 
-@Bot.command()
+@Bot.command(brief = "*Cambiar sonido.*", description = "Este comando te permite cambiar de sonido fuente para tus entrenamientos interválicos. Existen 2 opciones: piano y tono puro. Al ejecutar el comando cambias de un sonido al otro.")
 async def sonido(ctx):
   global piano
   piano = not piano
@@ -376,7 +376,7 @@ async def sonido(ctx):
 
 ###################### EXPERIENCIA ############################################################################################
 
-@Bot.command()
+@Bot.command(brief = "*Muestra tu experiencia y nivel.*", description = "Este comando te permite conocer tus puntos de experiencia y el nivel que has alcanzado en el modo 'Aventura interválica'.")
 async def exp(ctx):
   usr_id = str(ctx.author.id)
   usr_name = ctx.author.name
@@ -398,9 +398,8 @@ media = 0
 n = 0
 aciertos = 0
 fallos = 0
-@Bot.command()
+@Bot.command(brief = "*Entrenamiento interválico continuo.*", description = "Este comando te permite hacer muchos test interválicos seguidos completamente aleatorios.")
 async def continuo(ctx,modo = 'aleatorio'):
-
   modos = ['ascendente','descendente','simultaneo']
   if modo == 'aleatorio':
     modo_elegido = random.choice(modos)
@@ -534,7 +533,7 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13),usr2=None):
     await ctx.send(respuesta, delete_after=5)
 
 #################### DUELO #####################
-@Bot.command()
+@Bot.command(brief = "Desafiar a otro usuario.", description = "Este comando te permite desafiar a otro miembro del canal a un duelo de reconocimientos interválicos. En estos duelos, el primero que adivina el intervalo gana.")
 async def duelo(ctx,usr2: discord.member.Member):
   usr1 = ctx.author
   continuar = True
@@ -575,7 +574,7 @@ async def duelo(ctx,usr2: discord.member.Member):
 
 
 #################### MODOS #########################
-@Bot.command()
+@Bot.command(brief = "*Entrenamiento de modos.*", description = "Este comando permite poner a prueba tu reconocimiento modal. Por el momento sólo están programados los modos de la escala fuente MAYOR. Próximamente, se incluirán otras como el menor melódico, menor armónico, mayor armónico, octatónica, etc.")
 async def modos(ctx):
   #LA LISTA ESTÁ AQUÍ PARA QUE NO HAYA PROBLEMAS CON LOS ACENTOS (ELIMINAR "niveles.json")
   lista = {
