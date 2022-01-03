@@ -356,6 +356,13 @@ async def pito(ctx):
 #####################SONIDO#############################################################################################
 ################################################
 @Bot.command()
+async def sonido(ctx):
+  global piano
+  piano = not piano
+  respuesta = "Sonido: " + (piano*"Piano.") + ((not piano)*"Tonos puros.")
+  await ctx.send(respuesta)
+
+@Bot.command()
 async def piano(ctx):
   global piano
   piano = True
