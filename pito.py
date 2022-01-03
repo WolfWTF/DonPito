@@ -436,7 +436,7 @@ async def continuo(ctx,modo = 'aleatorio'):
     
 ##################### ENTRENAR ################################################################################################
 #ADAPTAR AL NIVEL DEL USUARIO
-@Bot.command()
+#@Bot.command()
 async def entrenar(ctx,modo = 'ascendente', inter = range(0,13),usr2=None):
   if modo == 'aleatorio':
     modo = random.choice(['ascendente','descendente','simultaneo'])
