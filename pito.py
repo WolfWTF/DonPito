@@ -20,7 +20,8 @@ import wave_gen as wg
 
 
 Bot = ComponentsBot(command_prefix="!",intents=discord.Intents.all())
-discord.ext.commands.DefaultHelpCommand.indent = 5
+#discord.ext.commands.
+Bot.DefaultHelpCommand.indent = 5
 start = datetime.now()
 channel_whitelist =[320694020328390666,840366998315991061]
 
