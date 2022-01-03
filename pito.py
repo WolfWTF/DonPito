@@ -217,8 +217,8 @@ async def uptime(ctx):
 
 ###################### NIVELES ########################################################################
 
-@Bot.command()
-async def niveles(ctx, description = "Muestra los niveles de entrenamiento interválico del modo Aventura."):
+@Bot.command(help = "Muestra los niveles de entrenamiento interválico del modo Aventura.")
+async def niveles(ctx):
   niveles = aj.abrir_json("DonPito/niveles.json")
   print(niveles)
   i=1
