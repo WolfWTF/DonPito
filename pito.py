@@ -398,7 +398,7 @@ async def continuo(ctx,modo = 'aleatorio'):
   stop_button = Button(label="Stop",style=4)
   global ActionRow3
   ActionRow3.append(stop_button) #ESTO ME LO HE CARGAO EN LA FUNCION ENTRENAR
-  continuar, elapsed, correcto = await entrenar(ctx,modo_elegido)
+  continuar, elapsed, correcto, usuario = await entrenar(ctx,modo_elegido)
   ActionRow3 = Botones_Intervalos[9:13]
 
   global media
