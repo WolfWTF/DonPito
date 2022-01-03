@@ -266,7 +266,8 @@ async def aventura(ctx):
   elif selec_usuario == "Sí":
     await ctx.send("Comenzando aventura. Usuario: {}.\nNivel {}: {}".format(usr_name,nivel,levels[str(nivel)]['nombre']).encode("latin-1").decode("utf-8"))
     aciertos = func_nivel(nivel,usr_name)
-
+    print(type(aciertos))
+    print(aciertos)
     #ACTUALIZAMOS PADAWANS
     #padawans = aj.abrir_json("DonPito/padawans.json")
     resultados = "Aciertos: {}/10. ".format(aciertos)
