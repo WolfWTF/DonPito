@@ -6,7 +6,6 @@ import discord
 from datetime import datetime
 import pydub
 import asyncio
-import discord_components#
 from discord_components import ComponentsBot, Button#, Select, SelectOption #DiscordComponents,  
 
 #Custom imports
@@ -21,7 +20,7 @@ import wave_gen as wg
 
 
 Bot = ComponentsBot(command_prefix="!",intents=discord.Intents.all())
-discord_components.commands.DefaultHelpCommand.indent = 5
+#discord_components.commands.DefaultHelpCommand.indent = 5
 start = datetime.now()
 channel_whitelist =[320694020328390666,840366998315991061]
 
