@@ -180,7 +180,7 @@ def get_audio(modo,semitones):
 ###################### COMANDOS ############################################################################################
 
 @Bot.command()
-async def help(ctx, comando = None):
+async def ayuda(ctx, comando = None):
   if comando == None:
     respuesta = discord.Embed(title="__**COMANDOS**__" , color= 0x2a59a1)
     comandos,config = get_comandos()
