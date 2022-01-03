@@ -3,6 +3,7 @@ from ffprobe import FFProbe
 import os
 import random
 import discord
+from discord.ext import commands
 from datetime import datetime
 import pydub
 import asyncio
@@ -20,9 +21,16 @@ import wave_gen as wg
 
 
 Bot = ComponentsBot(command_prefix="!",intents=discord.Intents.all())
-#discord_components.commands.DefaultHelpCommand.indent = 5
+discord.commands.DefaultHelpCommand.indent = 5
 start = datetime.now()
+
 channel_whitelist =[320694020328390666,840366998315991061]
+
+for filename in os.listdir('./cogs'):
+  if filename.endswith('.py'):
+    Bot.load_extension(f'cogs.{filename[:-3]}')
+
+
 
 @Bot.check_once
 def whitelist(ctx):
