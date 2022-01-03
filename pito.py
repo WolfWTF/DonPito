@@ -120,7 +120,7 @@ def get_escala(escala,direccion="ascendente"):
     nota = pydub.AudioSegment.from_file(nombre_nota)
     #fnota1.close()
     audio = audio.append(nota, crossfade = 25)
-    audio.export("DonPito/modo.mp3", format="mp3")
+  audio.export("DonPito/modo.mp3", format="mp3")
 
 
 entrenador_ocupado = False
