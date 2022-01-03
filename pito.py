@@ -236,10 +236,10 @@ async def aventura(ctx):
   Botones = await ctx.send(mensaje, components = [ActionRowSiNo])
 
   async def func_nivel(nivel,usr_name):
-    niveles = aj.abrir_json("DonPito/niveles.json")
+    levels = aj.abrir_json("DonPito/niveles.json")
     
-    interv = niveles[str(nivel)]['intervalos']
-    modo = niveles[str(nivel)]['modo']
+    interv = levels[str(nivel)]['intervalos']
+    modo = levels[str(nivel)]['modo']
     aciertos = 0
     media = 0
     for i in range(1,11):
@@ -265,7 +265,7 @@ async def aventura(ctx):
     #await ctx.reply("Saliendo...", delete_after = 5)
 
   elif selec_usuario == "Sí":
-    await ctx.send("Comenzando aventura. Usuario: {}.\nNivel {}: {}".format(usr_name,nivel,niveles[str(nivel)]['nombre']).encode("latin-1").decode("utf-8"))
+    await ctx.send("Comenzando aventura. Usuario: {}.\nNivel {}: {}".format(usr_name,nivel,levels[str(nivel)]['nombre']).encode("latin-1").decode("utf-8"))
     aciertos = func_nivel(nivel,usr_name)
 
     #ACTUALIZAMOS PADAWANS
