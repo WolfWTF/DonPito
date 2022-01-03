@@ -179,10 +179,9 @@ def get_audio(modo,semitones):
 
 ###################### COMANDOS ############################################################################################
 
-@Bot.command()
 async def ayuda(ctx, comando: str = None):
   x = Bot.all_commands
-  print(x)
+
   if comando == None:
     respuesta = discord.Embed(title="__**COMANDOS**__" , color= 0x2a59a1)
     comandos,config = get_comandos()
@@ -192,7 +191,7 @@ async def ayuda(ctx, comando: str = None):
     respuesta= "Test. {}".format(comando)
   await ctx.reply(embed=respuesta)
 
-@Bot.command()
+
 async def comandos(ctx):
   respuesta = discord.Embed(title="__**COMANDOS**__" , color= 0x2a59a1)
   comandos,config = get_comandos()
@@ -218,7 +217,7 @@ async def uptime(ctx):
 
 ###################### NIVELES ########################################################################
 
-@Bot.command()
+@Bot.command(description = "Muestra los niveles de entrenamiento interválico del modo Aventura.")
 async def niveles(ctx):
   niveles = aj.abrir_json("DonPito/niveles.json")
   print(niveles)
