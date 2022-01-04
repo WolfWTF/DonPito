@@ -624,7 +624,7 @@ async def ranking(ctx):
 
   puntuaciones = []
   for ID in padawans:
-    puntuacion.append([padawans[str(ID)]["name"], padawans[str(ID)]["exp"]])
+    puntuaciones.append([padawans[str(ID)]["name"], padawans[str(ID)]["exp"]])
   await ctx.send("Mira la consola, colgao!")
   print(puntuaciones)
 
