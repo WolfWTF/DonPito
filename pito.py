@@ -244,7 +244,7 @@ async def aventura(ctx):
     for i in range(1,11):
       continuar, elapsed, correcto, usuario = await entrenar(ctx,modo,interv)
       if not continuar:
-        return
+        return aciertos
       tiempo = tdf(elapsed)
       segundos_totales = round(tiempo[0]*3600*24 + tiempo[1]*3600 + tiempo[2]*60 + tiempo[3], 2)
       media += media*(i-1) + segundos_totales/i 
@@ -270,6 +270,7 @@ async def aventura(ctx):
     #padawans = aj.abrir_json("DonPito/padawans.json")
     resultados = "Aciertos: {}/10. ".format(aciertos)
     if aciertos >= 7:
+      padawans = aj.abrir_json("DonPito/padawans.json")
       resultados += ":white_check_mark: Has superado la prueba, pasas al nivel {}.".format(nivel+1)
       padawans[usr_id]["nivel_intervalos"] += 1
       aj.actualizar_padawans(padawans)
