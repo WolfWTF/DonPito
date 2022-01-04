@@ -616,6 +616,14 @@ async def modos(ctx):
     respuesta = ":x: Incorrecto. El modo era {}, no {}.".format(respuesta_correcta, selec_usuario)
   await ctx.send(respuesta,reference = audio)
 
+
+#################### RANKING #########################
+@Bot.command(brief = "Ranking de puntos de exp.", description = "Este comando muestra el top 3 personas que más puntos de experiencia han acumulado con entrenaientos auditivos.")
+async def ranking(ctx):
+  padawans = aj.abrir_json("DonPito/padawans.json")
+  print(padawans)
+  await ctx.send("Mira la consola, colgao!")
+
 ################################################################################################
 ################################# PASARLE EL TOKEN AL BOT ######################################
 ################################################################################################
