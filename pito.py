@@ -300,7 +300,6 @@ async def aventura(ctx):
       await ctx.send(resultados)
 
 
-
 ####################### PITO ##########################################################################
 
 @Bot.command(brief = "Entrenamiento frecuencial.", description = "Este comendo te permitirá poner a prueba tu oído haciéndote oír un tono puro y pidiéndote que adivines aproximadamente su frecuencia.")
@@ -329,11 +328,7 @@ async def pito(ctx):
   contenido =  """:thought_balloon: {}: {} Hz.
                   :loud_sound: Respuesta correcta: {} Hz.
                   :straight_ruler: Tolerancia: {} Hz.
-                  :bar_chart: Error de {} Hz.""".format(ctx.author.name, f, tolerancia, abs(frecuencia - f), segundos_totales)
-  '''contenido = ":thought_balloon: Respuesta de "+ ctx.author.name + ": "
-        contenido += ":loud_sound: Respuesta correcta: " + str(f) +  " Hz.\n"
-        contenido += ":straight_ruler: Intervalo tolerancia: " + str(tolerancia) + " Hz.\n"
-        contenido += ":bar_chart: Te has equivocado en " + str(abs(frecuencia - f)) +" Hz."'''
+                  :bar_chart: Error de {} Hz.""".format(ctx.author.name, frecuencia, f, tolerancia, abs(frecuencia - f))
   footer = "Tiempo: {}s.".format(segundos_totales)
   if frecuencia <= tolerancia[0] or frecuencia >= tolerancia[1]: 
     respuesta1 = ":x: *No pasas la prueba.*"
