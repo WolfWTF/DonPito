@@ -629,7 +629,7 @@ async def ranking(ctx):
   punt = sorted(puntuaciones,key=lambda x: x[1], reverse=True)
   respuesta = "RANKING DE EXP:\n"
   for user in punt:
-    respuesta += "*{}*: {} pts de exp.\n".format(user[1], user[2])
+    respuesta += "*{}*: {} pts de exp.\n".format(user[0], user[1])
 
   await ctx.send(respuesta)
 
