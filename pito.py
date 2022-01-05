@@ -625,10 +625,13 @@ async def ranking(ctx):
   padawans = aj.abrir_json("DonPito/padawans.json")
   puntuaciones = [] 
   for ID in padawans:
-    print(padawans[ID]['name'])
     puntuaciones.append([padawans[ID]['name'], padawans[ID]['exp']])
+
+  print(puntuaciones)
   punt = puntuaciones.sort()
-  await ctx.send(str(punt))
+  print(punt)
+
+  await ctx.send(punt)
 
 ################################################################################################
 ################################# PASARLE EL TOKEN AL BOT ######################################
