@@ -629,7 +629,7 @@ async def ranking(ctx):
 
   print(puntuaciones)
   punt = puntuaciones.sort()
-  print(punt)
+  print(punt.slice())
 
   await ctx.send(punt.slice())
 
