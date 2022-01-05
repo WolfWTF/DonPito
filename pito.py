@@ -627,10 +627,11 @@ async def ranking(ctx):
   for ID in padawans:
     puntuaciones.append([padawans[ID]['name'], padawans[ID]['exp']])
   punt = sorted(puntuaciones,key=lambda x: x[1], reverse=True)
+  respuesta = "RANKING DE EXP:\n"
   for user in punt:
-    print(user)
+    respuesta += "*{}*: {} pts de exp.\n".format(user[1], user[2])
 
-  await ctx.send(punt)
+  await ctx.send(respuesta)
 
 ################################################################################################
 ################################# PASARLE EL TOKEN AL BOT ######################################
