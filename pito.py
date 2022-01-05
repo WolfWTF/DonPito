@@ -623,7 +623,7 @@ async def modos(ctx):
 @Bot.command(brief = "Ranking de puntos de exp.", description = "Este comando muestra el top 3 personas que más puntos de experiencia han acumulado con entrenaientos auditivos.")
 async def ranking(ctx):
   padawans = aj.abrir_json("DonPito/padawans.json")
-  puntuaciones = ()  
+  puntuaciones = [] 
   for ID in padawans:
     puntuaciones.append([padawans[str(ID)]["name"], padawans[str(ID)]["exp"]])
   punt = sort(puntuaciones)
