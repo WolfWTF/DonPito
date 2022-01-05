@@ -24,7 +24,7 @@ Bot = ComponentsBot(command_prefix="!",intents=discord.Intents.all())
 #discord.ext.commands.DefaultHelpCommand.indent = 5
 start = datetime.now()
 
-channel_whitelist =[320694020328390666,840366998315991061]
+channel_whitelist =[320694020328390666,840366998315991061, 630135300131127324, 928229257392574514]
 
 for filename in os.listdir('./DonPito/cogs'):
   if filename.endswith('.py'):
