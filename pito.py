@@ -620,7 +620,7 @@ async def modos(ctx):
 
 
 #################### RANKING #########################
-'''@Bot.command(brief = "Ranking de puntos de exp.", description = "Este comando muestra el top 3 personas que más puntos de experiencia han acumulado con entrenaientos auditivos.")
+@Bot.command(brief = "Ranking de puntos de exp.", description = "Este comando muestra el top 3 personas que más puntos de experiencia han acumulado con entrenaientos auditivos.")
 async def ranking(ctx):
   padawans = aj.abrir_json("DonPito/padawans.json")
   
@@ -629,7 +629,7 @@ async def ranking(ctx):
   puntuaciones = []
   for ID in padawans:
     puntuaciones.append([padawans[str(ID)]["name"], padawans[str(ID)]["exp"]])
-  await ctx.send(str(puntuaciones))'''
+  await ctx.send(str(puntuaciones))
 
 ################################################################################################
 ################################# PASARLE EL TOKEN AL BOT ######################################
