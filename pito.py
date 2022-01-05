@@ -630,10 +630,10 @@ async def ranking(ctx):
   print(puntuaciones)
 
   #punt = puntuaciones.sort()
-  punt = sorted(puntuaciones,key=lambda x: x[1])
+  punt = sorted(puntuaciones,key=lambda x: x[1], reverse=True)
   print(punt)
 
-  await ctx.send(punt.slice())
+  await ctx.send(punt)
 
 ################################################################################################
 ################################# PASARLE EL TOKEN AL BOT ######################################
