@@ -628,8 +628,10 @@ async def ranking(ctx):
     puntuaciones.append([padawans[ID]['name'], padawans[ID]['exp']])
 
   print(puntuaciones)
-  punt = puntuaciones.sort()
-  print(punt.slice())
+
+  #punt = puntuaciones.sort()
+  punt = sorted(puntuaciones,key=lambda x: x[1])
+  print(punt)
 
   await ctx.send(punt.slice())
 
