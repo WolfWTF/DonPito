@@ -625,7 +625,7 @@ async def ranking(ctx):
   padawans = aj.abrir_json("DonPito/padawans.json")
   puntuaciones = [] 
   for ID in padawans:
-    print(padawans[ID])
+    print(padawans[ID]['name'])
     puntuaciones.append([padawans[ID]["name"], padawans[ID]["exp"]])
   punt = puntuaciones.sort()
   await ctx.send(str(punt))
