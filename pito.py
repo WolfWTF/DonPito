@@ -531,7 +531,7 @@ async def duelo(ctx,usr2: discord.member.Member,preg: int = 5):
   no = Button(label="No",style=4)
   comp.append(si)
   comp.append(no)
-  Botones = await ctx.send("Aceptas el duelo, {}?".format(usr2.id), components = [comp])
+  Botones = await ctx.send("Aceptas el duelo, <@{}>?".format(usr2.id), components = [comp])
 
   def check(interaction):
     return interaction.author == usr2
