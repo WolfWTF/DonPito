@@ -526,10 +526,11 @@ async def duelo(ctx,usr2: discord.member.Member,preg: int = 5):
   punt_usr2 = 0
 
   #### ACEPTAR EL DUELO:
-
+  comp = []
   si = Button(label="Sí",style=3)
   no = Button(label="No",style=4)
-  comp =si.append(no)
+  comp.append(si)
+  comp.append(no)
   Botones = await ctx.send("Opciones:", components = comp)
 
   def check(interaction):
