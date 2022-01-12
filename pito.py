@@ -529,7 +529,7 @@ async def duelo(ctx,usr2: discord.member.Member,preg: int = 5):
 
   si = Button(label="Sí",style=3)
   no = Button(label="No",style=4)
-  comp =[si, no]
+  comp =si.append(no)
   Botones = await ctx.send("Opciones:", components = comp)
 
   def check(interaction):
@@ -539,7 +539,6 @@ async def duelo(ctx,usr2: discord.member.Member,preg: int = 5):
   await Botones.delete()
   selec_usuario = interaction.component.label
   if selec_usuario=="Sí":
-
 
     for i in range(preg):
       if continuar:
@@ -565,7 +564,6 @@ async def duelo(ctx,usr2: discord.member.Member,preg: int = 5):
       ***{}***
       """.format(usr1,punt_usr1,usr2,punt_usr2,ganador)
     await ctx.reply(puntuaciones)
-
 
     #Es un modo que tiene como entrada dos usuarios, igual que los que están en /dar de Montse
     #En principio va a ser un duelo al mejor de 5 intervalos, quiero que marque por cuántos va. 
