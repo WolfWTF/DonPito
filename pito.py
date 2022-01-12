@@ -439,7 +439,7 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13),usr2=None):
     entrenador_ocupado = True
     #PREPARAMOS EL AUDIO
     with ctx.channel.typing():
-      await ctx.send("Preparando entrenamiento...",delete_after = 5)
+      await ctx.send("Preparando entrenamiento...",delete_after = 2)
       semitones = random.choice(inter)
       get_audio(modo,semitones)
       #### SE ENVIA EL AUDIO
@@ -496,8 +496,9 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13),usr2=None):
     elapsed = end-start
     await Botones.delete()
     selec_usuario = interaction.component.label
-    usuario = interaction.author
+    usuario = interaction.author 
 
+    #WTF no estaba ya definido?
     #¿qué pasa si el más rápido FALLA?
 
     #CORREGIMOS
@@ -516,44 +517,62 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13),usr2=None):
     await ctx.send(respuesta, delete_after=5)
 
 #################### DUELO #####################
+
 @Bot.command(brief = "Desafiar a otro usuario.", description = "Este comando te permite desafiar a otro miembro del canal a un duelo de reconocimientos interválicos. En estos duelos, el primero que adivina el intervalo gana.")
-async def duelo(ctx,usr2: discord.member.Member):
+async def duelo(ctx,usr2: discord.member.Member,preg: int = 5):
   usr1 = ctx.author
   continuar = True
   punt_usr1 = 0
   punt_usr2 = 0
-  for i in range(5):
-    if continuar:
 
-      continuar, elapsed, correcto, usuario = await entrenar(ctx,'aleatorio',range(0,13),usr2)
-      if usuario == usr1 and correcto:
-        punt_usr1 += 1
-      elif usuario == usr2 and correcto:
-        punt_usr2 += 1
+  #### ACEPTAR EL DUELO:
 
+  si = Button(label="Sí",style=3)
+  no = Button(label="No",style=4)
+  comp =[si, no]
+  Botones = await ctx.send("Opciones:", components = comp)
+
+  def check(interaction):
+    return interaction.author == usr2
+  interaction = await Bot.wait_for("button_click",check=check)
+
+  await Botones.delete()
+  selec_usuario = interaction.component.label
+  if selec_usuario=="Sí":
+
+
+    for i in range(preg):
+      if continuar:
+        continuar, elapsed, correcto, usuario = await entrenar(ctx,'aleatorio',range(0,13),usr2)
+        if usuario == usr1 and correcto:
+          punt_usr1 += 1
+        elif usuario == usr2 and correcto:
+          punt_usr2 += 1
+      else:
+        await ctx.reply("Duelo interrumpido por {}.".format(usuario), delete_after = 3)
+        return
+    if punt_usr1 > punt_usr2:
+      ganador = usr1.name
+    elif punt_usr1 < punt_usr2:
+      ganador = usr2.name
     else:
-      await ctx.reply("Duelo interrumpido por {}.".format(usuario), delete_after = 5)
-      return
-  if punt_usr1 > punt_usr2:
-    ganador = usr1.name
-  elif punt_usr1 < punt_usr2:
-    ganador = usr2.name
+      ganador = "Empate."
+
+    puntuaciones = """Resultados:
+      {}: {} puntos.
+      {}: {} puntos.
+      El ganador del duelo es...
+      ***{}***
+      """.format(usr1,punt_usr1,usr2,punt_usr2,ganador)
+    await ctx.reply(puntuaciones)
+
+
+    #Es un modo que tiene como entrada dos usuarios, igual que los que están en /dar de Montse
+    #En principio va a ser un duelo al mejor de 5 intervalos, quiero que marque por cuántos va. 
+    #En el duelo, se llama a !entrenar pero se autoriza a dos usuarios para la interacción.
+    #Se debe acumular el número de aciertos y al final, el que más tenga, gana.
   else:
-    ganador = "Empate."
-
-  puntuaciones = """Resultados:
-    {}: {} puntos.
-    {}: {} puntos.
-    El ganador del duelo es...
-    ***{}***
-    """.format(usr1,punt_usr1,usr2,punt_usr2,ganador)
-  await ctx.reply(puntuaciones)
-
-
-  #Es un modo que tiene como entrada dos usuarios, igual que los que están en /dar de Montse
-  #En principio va a ser un duelo al mejor de 5 intervalos, quiero que marque por cuántos va. 
-  #En el duelo, se llama a !entrenar pero se autoriza a dos usuarios para la interacción.
-  #Se debe acumular el número de aciertos y al final, el que más tenga, gana.
+    await ctx.send("Duelo rechazado.", delete_after=3)
 
 
 #################### MODOS #########################
