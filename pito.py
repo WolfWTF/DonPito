@@ -519,12 +519,14 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13),usr2=None):
 #################### DUELO #####################
 
 @Bot.command(brief = "Desafiar a otro usuario.", description = "Este comando te permite desafiar a otro miembro del canal a un duelo de reconocimientos interválicos. En estos duelos, el primero que adivina el intervalo gana.")
-async def duelo(ctx,usr2: discord.member.Member,preg: int = 5):
+async def duelo(ctx,usr2: discord.member.Member=None,preg: int = 5):
   usr1 = ctx.author
   continuar = True
   punt_usr1 = 0
   punt_usr2 = 0
-  print(usr2)
+  if usr2==None: 
+    await ctx.send("Debes mencionar a alguien!", delete_after=5)
+    return
   #### ACEPTAR EL DUELO:
   comp = []
   si = Button(label="Sí",style=3)
