@@ -138,8 +138,8 @@ entrenador_ocupado = False
 def get_audio(modo,semitones):
       global piano
       if piano:
-        lim_asc = [0,75]
-        lim_des = [11,87]
+        lim_asc = [12,63]
+        lim_des = [23,72]
       else:
         lim_asc = [1,37]
         lim_des = [12,49]
@@ -430,7 +430,6 @@ async def continuo(ctx,modo = 'aleatorio'):
     
 ##################### ENTRENAR ################################################################################################
 #ADAPTAR AL NIVEL DEL USUARIO
-#@Bot.command()
 async def entrenar(ctx,modo = 'ascendente', inter = range(0,13),usr2=None):
   if modo == 'aleatorio':
     modo = random.choice(['ascendente','descendente','simultaneo'])
