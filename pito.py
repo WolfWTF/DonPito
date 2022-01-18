@@ -536,7 +536,7 @@ async def duelo(ctx,usr2: discord.member.Member=None,preg: int=5):
     return  (interaccion_usr2 or interaccion_usr1)
 
   def check_abierto(interaction):
-    interaccion_usr2 = (interaction.author == usr2) and (interaction.component.label == "Sí" or interaction.component.label == "No")
+    interaccion_usr2 = (interaction.author != usr1) and (interaction.component.label == "Sí" or interaction.component.label == "No")
     interaccion_usr1 = (interaction.author == usr1) and (interaction.component.label == "Cancelar")
     return  (interaccion_usr2 or interaccion_usr1)
   if usr2 != None: 
