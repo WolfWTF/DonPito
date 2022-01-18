@@ -552,6 +552,9 @@ async def duelo(ctx,usr2: discord.member.Member=None,preg: int=5):
   await Botones.delete()
   selec_usuario = interaction.component.label
   if selec_usuario=="Sí":
+    respuesta = '''__**Iniciando duelo interválico!**__
+                  **{}** vs. **{}**  '''
+    await ctx.send(respuesta)
     for i in range(preg):
       if continuar:
         continuar, elapsed, correcto, usuario = await entrenar(ctx,'aleatorio',range(0,13),usr2)
