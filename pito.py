@@ -518,15 +518,11 @@ async def entrenar(ctx,modo = 'ascendente', inter = range(0,13),usr2=None):
 #################### DUELO #####################
 
 @Bot.command(brief = "Desafiar a otro usuario.", description = "Este comando te permite desafiar a otro miembro del canal a un duelo de reconocimientos interválicos. En estos duelos, el primero que adivina el intervalo gana.")
-async def duelo(ctx,usr2: discord.member.Member=None,preg: int = 5):
+async def duelo(ctx,usr2: discord.member.Member=None,preg: int=5):
   usr1 = ctx.author
   continuar = True
   punt_usr1 = 0
   punt_usr2 = 0
-  if usr2==None: 
-    await ctx.send("Debes mencionar a alguien!", delete_after=5)
-    return
-  #### ACEPTAR EL DUELO:
   comp = []
   si = Button(label="Sí",style=3)
   no = Button(label="No",style=4)
@@ -534,19 +530,28 @@ async def duelo(ctx,usr2: discord.member.Member=None,preg: int = 5):
   comp.append(si)
   comp.append(no)
   comp.append(cancelar)
-
-  Botones = await ctx.send("¿Aceptas el duelo, <@{}>?".format(usr2.id), components = [comp])
-
   def check(interaction):
     interaccion_usr2 = (interaction.author == usr2) and (interaction.component.label == "Sí" or interaction.component.label == "No")
     interaccion_usr1 = (interaction.author == usr1) and (interaction.component.label == "Cancelar")
     return  (interaccion_usr2 or interaccion_usr1)
-  interaction = await Bot.wait_for("button_click",check=check)
+
+  def check_abierto(interaction):
+    interaccion_usr2 = (interaction.author == usr2) and (interaction.component.label == "Sí" or interaction.component.label == "No")
+    interaccion_usr1 = (interaction.author == usr1) and (interaction.component.label == "Cancelar")
+    return  (interaccion_usr2 or interaccion_usr1)
+  if usr2 != None: 
+    #### ACEPTAR EL DUELO:
+    Botones = await ctx.send("¿Aceptas el duelo, <@{}>?".format(usr2.id), components = [comp])
+    interaction = await Bot.wait_for("button_click",check=check)
+
+  else:
+    Botones = await ctx.send("¡<@{}> lanza un duelo al aire! ¿Aceptas el reto?".format(usr1.id), components = [comp])
+    interaction = await Bot.wait_for("button_click",check=check_abierto)
+    usr2 = interaction.author
 
   await Botones.delete()
   selec_usuario = interaction.component.label
   if selec_usuario=="Sí":
-
     for i in range(preg):
       if continuar:
         continuar, elapsed, correcto, usuario = await entrenar(ctx,'aleatorio',range(0,13),usr2)
