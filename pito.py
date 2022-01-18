@@ -553,7 +553,7 @@ async def duelo(ctx,usr2: discord.member.Member=None,preg: int=5):
   selec_usuario = interaction.component.label
   if selec_usuario=="Sí":
     respuesta = '''__**Iniciando duelo interválico!**__
-                  **{}** vs. **{}**  '''
+      **{}** vs. **{}**  '''
     await ctx.send(respuesta)
     for i in range(preg):
       if continuar:
