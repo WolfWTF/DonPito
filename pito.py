@@ -530,12 +530,17 @@ async def duelo(ctx,usr2: discord.member.Member=None,preg: int = 5):
   comp = []
   si = Button(label="Sí",style=3)
   no = Button(label="No",style=4)
+  cancelar = Button(label="Cancelar",style=4)
   comp.append(si)
   comp.append(no)
+  comp.append(cancelar)
+
   Botones = await ctx.send("¿Aceptas el duelo, <@{}>?".format(usr2.id), components = [comp])
 
   def check(interaction):
-    return interaction.author == usr2
+    interaccion_usr2 = (interaction.author == usr2) and (interaction.component.label == "Sí" or interaction.component.label == "No")
+    interaccion_usr1 = (interaction.author == usr1) and (interaction.component.label == "Cancelar")
+    return  (interaccion_usr2 or interaccion_usr1)
   interaction = await Bot.wait_for("button_click",check=check)
 
   await Botones.delete()
@@ -571,9 +576,10 @@ async def duelo(ctx,usr2: discord.member.Member=None,preg: int = 5):
     #En principio va a ser un duelo al mejor de 5 intervalos, quiero que marque por cuántos va. 
     #En el duelo, se llama a !entrenar pero se autoriza a dos usuarios para la interacción.
     #Se debe acumular el número de aciertos y al final, el que más tenga, gana.
-  else:
+  elif selec_usuario=="No":
     await ctx.send("Duelo rechazado.", delete_after=3)
-
+  else:
+    await ctx.send("Duelo cancelado.", delete_after=3)
 
 #################### MODOS #########################
 @Bot.command(brief = "Entrenamiento de modos.", description = "Este comando permite poner a prueba tu reconocimiento modal. Por el momento sólo están programados los modos de la escala fuente MAYOR. Próximamente, se incluirán otras como el menor melódico, menor armónico, mayor armónico, octatónica, etc.")
