@@ -552,7 +552,7 @@ async def duelo(ctx,usr2: discord.member.Member=None,preg: int=5):
   await Botones.delete()
   selec_usuario = interaction.component.label
   if selec_usuario=="Sí":
-    respuesta = '''__**Iniciando duelo interválico!**__
+    respuesta = '''__**¡Iniciando duelo interválico!**__
       **{}** vs. **{}**  '''.format(usr1,usr2)
     await ctx.send(respuesta)
     for i in range(preg):
